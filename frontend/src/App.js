@@ -1,13 +1,17 @@
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import PageNotFound from './Components/PageNotFound';
+import EmptyPage from './Components/EmptyPage';
+import LoginPage from './Components/LoginPage';
 
 const App = () => (
-  <div className="App m-3">
-    <ButtonGroup aria-label="Basic example">
-      <Button variant="primary">Left</Button>
-      <Button variant="primary">Middle</Button>
-      <Button variant="primary">Right</Button>
-    </ButtonGroup>
-  </div>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<EmptyPage />} />
+      <Route path="login" element={<LoginPage />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 export default App;
