@@ -1,3 +1,5 @@
+import logo from '../assets/404-error.png';
+
 const PageNotFound = () => (
   <div className="h-100 bg-ligth">
     <div className="h-100" id="chat">
@@ -12,12 +14,13 @@ const PageNotFound = () => (
         <div className="text-center">
           <img
             alt="Страница не найдена"
-            src="https://frontend-chat-ru.hexlet.app/static/media/404.38677c8fa96b7e2b6537040f39020684.svg"
+            className="w-25 img-fluid" // Устанавливаем ширину в 25%
+            src={logo}
           />
           <h1 className="h4 text-muted">Страница не найдена</h1>
           <p className="text-muted">
             Но вы можете перейти&nbsp;
-            <a href="/cool">на главную страницу </a>
+            <a href="/">на главную страницу </a>
           </p>
         </div>
       </div>
