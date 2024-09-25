@@ -7,6 +7,8 @@ const modalStyle = {
   top: '55%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
+  maxHeight: '90vh', // Ограничиваем высоту окна
+  overflowY: 'auto', // Добавляем прокрутку только внутри модального окна, если контент превышает высоту
 };
 
 const LoginPage = () => (
