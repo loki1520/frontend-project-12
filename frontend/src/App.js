@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import PageNotFound from './components/PageNotFound';
-import LoginPage from './components/LoginPage';
-import MainPage from './components/MainPage';
+import PageNotFound from './components/pages/notFoundPage';
+import LoginPage from './components/pages/LoginPage';
+import MainPage from './components/pages/MainPage';
 
 const App = () => (
   <BrowserRouter>
