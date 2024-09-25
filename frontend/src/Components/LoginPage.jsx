@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from 'formik';
-import logo from '../assets/login.png';
+import login from '../assets/login.png';
 
 const LoginPage = () => (
   <div className="h-100 bg-light">
@@ -19,7 +19,7 @@ const LoginPage = () => (
                 <div className="card-body row p-5">
                   <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                     <img
-                      src={logo}
+                      src={login}
                       className="w-50 img-fluid"
                       alt="Войти"
                     />
@@ -34,38 +34,36 @@ const LoginPage = () => (
                       console.log(JSON.stringify(values, null, 2));
                     }}
                   >
-                    {() => (
-                      <Form className="col-12 col-md-6 mt-3 mt-md-0">
-                        <h1 className="text-center mb-4">Войти</h1>
-                        <div className="form-floating mb-3">
-                          <Field
-                            name="username"
-                            id="username"
-                            type="text"
-                            required
-                            placeholder="Ваш ник"
-                            className="form-control"
-                            autoComplete="username"
-                          />
-                          <label htmlFor="username">Ваш ник</label>
-                        </div>
-                        <div className="form-floating mb-3">
-                          <Field
-                            name="password"
-                            id="password"
-                            type="password"
-                            required
-                            placeholder="Пароль"
-                            className="form-control"
-                            autoComplete="current-password"
-                          />
-                          <label htmlFor="password">Пароль</label>
-                        </div>
-                        <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
-                          Войти
-                        </button>
-                      </Form>
-                    )}
+                    <Form className="col-12 col-md-6 mt-3 mt-md-0">
+                      <h1 className="text-center mb-4">Войти</h1>
+                      <div className="form-floating mb-3">
+                        <Field
+                          name="username"
+                          id="username"
+                          type="text"
+                          required
+                          placeholder="Ваш ник"
+                          className="form-control"
+                          autoComplete="username"
+                        />
+                        <label htmlFor="username">Ваш ник</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <Field
+                          name="password"
+                          id="password"
+                          type="password"
+                          required
+                          placeholder="Пароль"
+                          className="form-control"
+                          autoComplete="current-password"
+                        />
+                        <label htmlFor="password">Пароль</label>
+                      </div>
+                      <button type="submit" className="w-100 mb-3 btn btn-outline-primary">
+                        Войти
+                      </button>
+                    </Form>
                   </Formik>
                 </div>
                 <div className="card-footer p-4">

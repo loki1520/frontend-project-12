@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import PageNotFound from './Components/PageNotFound';
-import MainPage from './Components/MainPage';
-import LoginPage from './Components/LoginPage';
+import PageNotFound from './components/PageNotFound';
+import LoginPage from './components/LoginPage';
+import MainPage from './components/MainPage';
 
 const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<MainPage />} />
-      <Route path="login" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   </BrowserRouter>
