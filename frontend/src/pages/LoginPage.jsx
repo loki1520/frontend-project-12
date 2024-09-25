@@ -1,16 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import loginImg from '../assets/login.png';
 
-// window centring
-const modalStyle = {
-  position: 'absolute',
-  top: '55%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  maxHeight: '90vh', // Ограничиваем высоту окна
-  overflowY: 'auto', // Добавляем прокрутку только внутри модального окна, если контент превышает высоту
-};
-
 const LoginPage = () => (
   <div className="h-100">
     <div className="h-100" id="chat">
@@ -22,8 +12,8 @@ const LoginPage = () => (
             </a>
           </div>
         </nav>
-        <div style={modalStyle} className="container-fluid h-100">
-          <div className="row justify-content-center align-content-center h-100">
+        <div className="container-fluid h-100">
+          <div style={{ minHeight: '90vh' }} className="row justify-content-center align-content-center h-100">
             <div className="col-12 col-md-8 col-xxl-6">
               <div className="card shadow-sm">
                 <div className="card-body row p-5">
