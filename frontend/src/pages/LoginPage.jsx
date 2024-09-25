@@ -3,8 +3,8 @@ import loginImg from '../assets/login.png';
 
 // window centring
 const modalStyle = {
-  position: 'fixed',
-  top: '50%',
+  position: 'absolute',
+  top: '55%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
 };
@@ -28,7 +28,7 @@ const LoginPage = () => (
                   <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                     <img
                       src={loginImg}
-                      className="w-50 img-fluid"
+                      className="img-fluid"
                       alt="Войти"
                     />
                   </div>
