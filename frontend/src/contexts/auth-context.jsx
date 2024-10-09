@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from './index.jsx';
 
@@ -12,15 +12,16 @@ const AuthProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const value = useMemo(() => ({
+    isAuthorized,
+    logIn,
+    logOut,
+    location,
+    navigate,
+  }), [isAuthorized, location, navigate]);
+
   return (
-    <AuthContext.Provider value={{
-      isAuthorized,
-      logIn,
-      logOut,
-      location,
-      navigate,
-    }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
