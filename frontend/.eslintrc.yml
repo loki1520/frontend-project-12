@@ -29,4 +29,5 @@ rules:
   quotes: ["error", "single", { "allowTemplateLiterals": true }] # Одинарные кавычки в JavaScript
   jsx-quotes: ["error", "prefer-double"] # Двойные кавычки в JSX
   jsx-a11y/label-has-associated-control: off
-  react/jsx-no-constructed-context-values: off # Игнорирование ошибки о изменяемом объекте
+  react/jsx-no-constructed-context-values: off
+  
