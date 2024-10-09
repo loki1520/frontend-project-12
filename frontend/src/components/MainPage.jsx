@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/index.jsx';
 
 const MainPage = () => {
   const [token, setToken] = useState('');
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { location, navigate } = useAuth();
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem('userId'));

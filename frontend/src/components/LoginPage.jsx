@@ -2,15 +2,12 @@ import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/index.jsx';
 import loginImg from '../assets/login.png';
 import routes from '../routes.js';
 
 const LoginPage = () => {
-  const auth = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { location, logIn, navigate } = useAuth();
 
   const from = location.state?.from?.pathname || '/';
 
@@ -26,8 +23,9 @@ const LoginPage = () => {
     onSubmit: async (values, actions) => {
       try {
         const response = await axios.post(routes.loginPath(), values);
+        console.log(response);
         localStorage.setItem('userId', JSON.stringify(response.data));
-        auth.logIn();
+        logIn();
         actions.resetForm();
         navigate(from, { replace: true });
       } catch (error) {
