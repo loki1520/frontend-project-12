@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5001",
-  "engines": {
-    "npm": "9.6.7",
-    "node": "18.x"
-  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.8",
     "@testing-library/jest-dom": "^5.17.0",
