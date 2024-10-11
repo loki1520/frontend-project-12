@@ -1,24 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { messages: [], _ids: [], _currentMessageId: null };
+const initialState = { messagesList: [], _ids: [], _currentMessageId: null };
 
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessages(state, action) {
-      state.messages = action.payload;
+    getMessages(state, action) {
+      state.messagesList = action.payload;
     },
     addMessage: (state, action) => {
-      state.messages.push(action.payload);
+      state.messagesList.push(action.payload);
     },
     removeMessage(state, action) {
       const { id } = action.payload;
-      state.messages = state.messages.filter((message) => message.id !== id);
+      state.messagesList = state.messagesList.filter((message) => message.id !== id);
     },
     renameMessage(state, action) {
       const { id, newText } = action.payload;
-      const currentMessage = state.messages.find((message) => message.id === id);
+      const currentMessage = state.messagesList.find((message) => message.id === id);
       if (currentMessage) {
         currentMessage.text = newText;
       }
@@ -27,7 +27,7 @@ const messagesSlice = createSlice({
 });
 
 export const {
-  addMessages,
+  getMessages,
   addMessage,
   removeMessage,
   renameMessage,

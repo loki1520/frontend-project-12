@@ -17,8 +17,8 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      username: 'admin',
+      password: 'admin',
     },
     onSubmit: async (values, actions) => {
       try {
