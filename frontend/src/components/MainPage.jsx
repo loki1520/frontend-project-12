@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const MainPage = () => {
   const [token, setToken] = useState('');
   const { location, navigate } = useAuth();
 
+  // if token is missing, redirect to login page
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem('userId'));
 
@@ -20,7 +22,7 @@ const MainPage = () => {
     const fetchChannels = async () => {
       if (token) {
         try {
-          const response = await axios.get('/api/v1/channels', {
+          const response = await axios.get(routes.channelsPath(), {
             headers: {
               Authorization: `Bearer ${token}`,
             },
