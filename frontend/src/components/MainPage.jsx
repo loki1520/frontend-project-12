@@ -87,7 +87,6 @@ const MainPage = () => {
                       <span className="visually-hidden">+</span>
                     </button>
                   </div>
-
                   <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block" style={{ minHeight: '74vh' }}>
                     <li className="nav-item w-100">
                       <button type="button" className="w-100 rounded-0 text-start btn">
@@ -109,9 +108,7 @@ const MainPage = () => {
                     <p className="m-0"><b># random</b></p>
                     <span className="text-muted">0 сообщений</span>
                   </div>
-
                   <div id="messages-box" className="chat-messages overflow-auto px-5" style={{ minHeight: '63vh' }} />
-
                   <div className="mt-auto px-5 py-3">
                     <form noValidate className="py-1 border rounded-2">
                       <div className="input-group has-validation">
