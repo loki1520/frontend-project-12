@@ -14,8 +14,6 @@ const messagesSlice = createSlice({
     },
     removeMessage(state, action) {
       const { id } = action.payload;
-
-
       state.messages = state.messages.filter((message) => message.id !== id);
     },
     renameMessage(state, action) {
