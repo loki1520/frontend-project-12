@@ -20,7 +20,6 @@ const MainPage = () => {
   // if token is missing, redirect to login page
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem('userId'));
-
     if (!userId || !userId.token) {
       navigate('/login', { state: { from: location } });
     } else {
