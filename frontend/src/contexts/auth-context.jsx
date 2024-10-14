@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('userData');
     navigate('/login', { state: { from: location } });
-  }, [setUser, navigate, location]);
+  }, [navigate, location]);
 
   const value = useMemo(() => ({
     user,

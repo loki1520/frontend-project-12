@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import useAuth from '../hooks/useAuth.jsx';
@@ -18,8 +18,12 @@ const MainPage = () => {
   } = useAuth();
 
   const dispatch = useDispatch();
+
   const channels = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages);
+
+  // может и не нужен сейчас localStorage?)
+  const [activeChannelId, setActiveChannelId] = useState(1);
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -31,7 +35,7 @@ const MainPage = () => {
     const { token } = userData;
 
     const fetchChannels = async () => {
-      if (!userData) return; // Проверка, чтобы избежать ошибки #1
+      if (!userData) return; // Проверка, чтобы избежать ошибки #!
       try {
         const responseChannels = await axios.get(routes.channelsPath(), {
           headers: {
@@ -39,13 +43,15 @@ const MainPage = () => {
           },
         });
         dispatch(getChannels(responseChannels.data));
+        // [{ id: '1', name: 'general', removable: false }, ...]
+        setActiveChannelId(responseChannels.data[0].id);
       } catch (error) {
         console.error('Ошибка при получении каналов:', error);
       }
     };
 
     const fetchMessages = async () => {
-      if (userData) { // Проверка, чтобы избежать ошибки #2
+      if (userData) { // Проверка, чтобы избежать ошибки #!
         try {
           const responseMessages = await axios.get(routes.messagesPath(), {
             headers: {
@@ -53,6 +59,7 @@ const MainPage = () => {
             },
           });
           dispatch(getMessages(responseMessages.data));
+          // [{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
         } catch (error) {
           console.error('Ошибка при получении сообщений:', error);
         }
@@ -92,7 +99,7 @@ const MainPage = () => {
                     <b>Каналы</b>
                     <button type="button" className="p-0 text-primary btn btn-group-vertical">
                       <svg
-                        // xmlns="http://www.w3.org/2000/svg"
+                        xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16"
                         width="20"
                         height="20"
@@ -116,8 +123,10 @@ const MainPage = () => {
                         style={{ listStyleType: 'none', paddingLeft: 0 }} // Убираем маркер и отступ
                       >
                         <button
+                          onClick={() => setActiveChannelId(element.id)}
                           type="button"
-                          className="w-100 rounded-0 text-start btn d-flex align-items-center justify-content-center"
+                          className={`w-100 rounded-0 text-start btn d-flex align-items-center justify-content-center
+                            ${element.id === activeChannelId ? 'btn-secondary' : ''}`}
                         >
                           <span className="me-1">#</span>
                           {element.name}
@@ -130,7 +139,9 @@ const MainPage = () => {
                 <div className="col p-0 h-100 d-flex flex-column">
                   <div className="bg-light mb-4 p-3 shadow-sm small">
                     <p className="m-0">
-                      <b># random</b>
+                      <b>
+                        {`# ${channels.channelsList.find((el) => el.id === activeChannelId)?.name || 'general'}`}
+                      </b>
                     </p>
                     <span className="text-muted">
                       {`${messages.messagesList.length} сообщений`}
