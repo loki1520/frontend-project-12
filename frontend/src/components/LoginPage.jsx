@@ -2,32 +2,28 @@ import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import axios from 'axios';
-import useAuth from '../hooks/index.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 import loginImg from '../assets/login.png';
 import routes from '../routes.js';
 
 const LoginPage = () => {
-  const { location, logIn, navigate } = useAuth();
-
-  const from = location.state?.from?.pathname || '/';
+  const { location, navigate, logIn } = useAuth();
 
   const inputRef = useRef();
-
   useEffect(() => { inputRef.current.focus(); }, []);
 
   const formik = useFormik({
     initialValues: {
-      username: 'admin',
-      password: 'admin',
+      username: '',
+      password: '',
     },
     onSubmit: async (values, actions) => {
       try {
         const response = await axios.post(routes.loginPath(), values);
-        console.log(response);
-        localStorage.setItem('userId', JSON.stringify(response.data));
-        logIn();
+        localStorage.setItem('userData', JSON.stringify(response.data));
+        logIn(response.data);
         actions.resetForm();
-        navigate(from, { replace: true });
+        navigate('/', { state: { from: location } });
       } catch (error) {
         if (error.response && error.response.status === 401) {
           actions.setErrors({ errorUnauthorized: 'Неправильный логин или пароль' });
