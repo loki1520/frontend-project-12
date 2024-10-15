@@ -1,4 +1,9 @@
-import { useState, useMemo, useCallback } from 'react';
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from './index.jsx';
 
@@ -9,11 +14,6 @@ const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const logIn = (userData) => {
-    setUser(userData);
-    localStorage.setItem('userData', JSON.stringify(userData));
-  };
-
   const logOut = useCallback(() => {
     setUser(null);
     localStorage.removeItem('userData');
@@ -22,11 +22,18 @@ const AuthProvider = ({ children }) => {
 
   const value = useMemo(() => ({
     user,
+    setUser,
     location,
     navigate,
-    logIn,
     logOut,
   }), [user, location, navigate, logOut]);
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={value}>

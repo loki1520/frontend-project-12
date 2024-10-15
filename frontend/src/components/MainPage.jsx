@@ -4,7 +4,7 @@ import useAuth from '../hooks/useAuth.jsx';
 import { fetchChannels, fetchMessages } from '../services/chat.js';
 
 const MainPage = () => {
-  const { logOut } = useAuth();
+  const { user, logOut } = useAuth();
 
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels);
@@ -16,13 +16,12 @@ const MainPage = () => {
   //   .channelsList.find((el) => el.id === activeChannelId)?.name || 'general';
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) return;
-    const { token } = userData;
+    if (!user) return;
+    const { token } = user;
 
     fetchChannels(token, dispatch);
     fetchMessages(token, dispatch);
-  }, [dispatch]);
+  }, [user, dispatch]);
 
   // Устанавливаем активный канал при загрузке данных
   useEffect(() => {
