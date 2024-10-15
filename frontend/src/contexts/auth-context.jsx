@@ -28,12 +28,13 @@ const AuthProvider = ({ children }) => {
     logOut,
   }), [user, location, navigate, logOut]);
 
+  const userData = JSON.parse(localStorage.getItem('userData'));
+
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    if (userData) {
+    if (userData && !user) {
       setUser(userData);
     }
-  }, []);
+  }, [user, userData]);
 
   return (
     <AuthContext.Provider value={value}>
