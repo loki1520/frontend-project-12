@@ -7,7 +7,7 @@ import loginImg from '../assets/login.png';
 import routes from '../routes.js';
 
 const LoginPage = () => {
-  const { location, navigate, logIn } = useAuth();
+  const { location, navigate } = useAuth();
 
   const inputRef = useRef();
   useEffect(() => { inputRef.current.focus(); }, []);
@@ -21,7 +21,6 @@ const LoginPage = () => {
       try {
         const response = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userData', JSON.stringify(response.data));
-        logIn(response.data);
         actions.resetForm();
         navigate('/', { state: { from: location } });
       } catch (error) {

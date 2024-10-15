@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { messagesList: [], _ids: [], _currentMessageId: null };
+const initialState = { messagesList: [], _currentMessageId: null };
 
 const messagesSlice = createSlice({
   name: 'messages',

@@ -1,74 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import useAuth from '../hooks/useAuth.jsx';
-import routes from '../routes.js';
-import {
-  getChannels,
-} from '../slices/channelsSlice.js';
-import {
-  getMessages,
-} from '../slices/messagesSlice.js';
+import { fetchChannels, fetchMessages } from '../services/chat.js';
 
 const MainPage = () => {
-  const {
-    navigate,
-    location,
-    logOut,
-  } = useAuth();
+  const { logOut } = useAuth();
 
   const dispatch = useDispatch();
-
   const channels = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages);
 
-  // может и не нужен сейчас localStorage?)
-  const [activeChannelId, setActiveChannelId] = useState(1);
+  const [activeChannelId, setActiveChannelId] = useState(null);
+  const [activeChannelName, setActiveChannelName] = useState('general');
+  // const activeChannelName = channels
+  //   .channelsList.find((el) => el.id === activeChannelId)?.name || 'general';
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) {
-      navigate('/login', { state: { from: location } });
-      return;
-    }
-
+    if (!userData) return;
     const { token } = userData;
 
-    const fetchChannels = async () => {
-      if (!userData) return; // Проверка, чтобы избежать ошибки #!
-      try {
-        const responseChannels = await axios.get(routes.channelsPath(), {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        dispatch(getChannels(responseChannels.data));
-        // [{ id: '1', name: 'general', removable: false }, ...]
-        setActiveChannelId(responseChannels.data[0].id);
-      } catch (error) {
-        console.error('Ошибка при получении каналов:', error);
-      }
-    };
+    fetchChannels(token, dispatch);
+    fetchMessages(token, dispatch);
+  }, [dispatch]);
 
-    const fetchMessages = async () => {
-      if (userData) { // Проверка, чтобы избежать ошибки #!
-        try {
-          const responseMessages = await axios.get(routes.messagesPath(), {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          dispatch(getMessages(responseMessages.data));
-          // [{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
-        } catch (error) {
-          console.error('Ошибка при получении сообщений:', error);
-        }
-      }
-    };
-
-    fetchChannels();
-    fetchMessages();
-  }, [navigate, location, dispatch]);
+  // Устанавливаем активный канал при загрузке данных
+  useEffect(() => {
+    if (channels.channelsList.length > 0) {
+      setActiveChannelId(channels.channelsList[0].id);
+      setActiveChannelName(channels.channelsList[0].name);
+    }
+  }, [channels]);
 
   return (
     <div className="bg-light">
@@ -123,7 +85,10 @@ const MainPage = () => {
                         style={{ listStyleType: 'none', paddingLeft: 0 }} // Убираем маркер и отступ
                       >
                         <button
-                          onClick={() => setActiveChannelId(element.id)}
+                          onClick={() => {
+                            setActiveChannelId(element.id);
+                            setActiveChannelName(element.name);
+                          }}
                           type="button"
                           className={`w-100 rounded-0 text-start btn d-flex align-items-center justify-content-center
                             ${element.id === activeChannelId ? 'btn-secondary' : ''}`}
@@ -140,7 +105,7 @@ const MainPage = () => {
                   <div className="bg-light mb-4 p-3 shadow-sm small">
                     <p className="m-0">
                       <b>
-                        {`# ${channels.channelsList.find((el) => el.id === activeChannelId)?.name || 'general'}`}
+                        {`# ${activeChannelName}`}
                       </b>
                     </p>
                     <span className="text-muted">
