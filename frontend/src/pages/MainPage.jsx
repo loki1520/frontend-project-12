@@ -10,14 +10,13 @@ const MainPage = () => {
 
   const dispatch = useDispatch();
 
-  const channels = useSelector((state) => state.channels);
-  const messages = useSelector((state) => state.messages);
+  const { channels: { channelsList, currentChannelId } } = useSelector((state) => state);
+  const { messages: { messagesList } } = useSelector((state) => state.messages);
 
-  const activeChannelName = channels
-    .channelsList.find((el) => el.id === channels.currentChannelId)?.name || 'general';
+  const activeChannelName = channelsList.find((el) => el.id === currentChannelId)?.name || 'general';
 
-  const activeMessages = messages.messagesList
-    .filter(({ channelId }) => channelId === channels.currentChannelId);
+  const activeMessages = messagesList
+    .filter(({ channelId }) => channelId === currentChannelId);
 
   useEffect(() => {
     if (!user) return;
@@ -28,11 +27,11 @@ const MainPage = () => {
   }, [user, dispatch]);
 
   // useEffect(() => {
-  //   if (channels.channelsList.length > 0 && !channels.currentChannelId) {
-  //     const firstChannelId = channels.channelsList[0].id;
+  //   if (channelsList.length > 0 && !currentChannelId) {
+  //     const firstChannelId = channelsList[0].id;
   //     dispatch(setCurrentChannel(firstChannelId));
   //   }
-  // }, [channels.channelsList, channels.currentChannelId, dispatch]);
+  // }, [channelsList, currentChannelId, dispatch]);
 
   return (
     <div className="bg-light">
@@ -80,20 +79,20 @@ const MainPage = () => {
                     className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
                     style={{ minHeight: '74vh' }}
                   >
-                    {channels.channelsList.map((element) => (
+                    {channelsList.map(({ name, id }) => (
                       <li
-                        key={element.id}
+                        key={id}
                         className="nav-item w-100"
                         style={{ listStyleType: 'none', paddingLeft: 0 }} // Убираем маркер и отступ
                       >
                         <button
-                          onClick={() => dispatch(setCurrentChannel(element.id))}
+                          onClick={() => dispatch(setCurrentChannel(id))}
                           type="button"
                           className={`w-100 rounded-0 text-start btn d-flex align-items-center justify-content-center
-                            ${element.id === channels.currentChannelId ? 'btn-secondary' : ''}`}
+                            ${id === currentChannelId ? 'btn-secondary' : ''}`}
                         >
                           <span className="me-1">#</span>
-                          {element.name}
+                          {name}
                         </button>
                       </li>
                     ))}
