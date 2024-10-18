@@ -1,17 +1,53 @@
 import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
+import axios from 'axios';
+import { addMessage } from '../slices/messagesSlice.js';
+import useAuth from '../hooks/useAuth.jsx';
+import routes from '../routes.js';
+import socket from '../socket.js';
 
 const ChatForm = () => {
+  const { user } = useAuth();
+  const { currentChannelId } = useSelector((state) => state.channels);
+  const dispatch = useDispatch();
+
   const inputRef = useRef();
   useEffect(() => { inputRef.current.focus(); }, []);
+
+  useEffect(() => {
+    socket.on('newMessage', (newMessage) => {
+      // console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      // console.log(socket.connected); // true
+      dispatch(addMessage(newMessage));
+    });
+
+    return () => {
+      socket.off('newMessage');
+    };
+  }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
       message: '',
     },
     onSubmit: (values, actions) => {
-      console.log(JSON.stringify(values, null, 2));
+      if (!user) {
+        console.error('something with token in chatForm');
+        return;
+      }
+      const { username, token } = user;
+
+      const newMessage = { body: values, channelId: currentChannelId, username };
+      axios.post(routes.messagesPath(), newMessage, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log(response.data);
+        // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
+      });
       actions.resetForm();
     },
   });
