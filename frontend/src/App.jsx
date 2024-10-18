@@ -5,9 +5,9 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import LoginPage from './components/LoginPage.jsx';
-import MainPage from './components/MainPage.jsx';
-import NotFoundPage from './components/NotFoundPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import MainPage from './pages/MainPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 import AuthProvider from './contexts/auth-context.jsx';
 import useAuth from './hooks/useAuth.jsx';
 import store from './slices/store.js';
@@ -15,7 +15,6 @@ import store from './slices/store.js';
 const PrivateRoute = ({ children }) => {
   const { location } = useAuth();
   const isAuthorized = localStorage.getItem('userData');
-  console.log(isAuthorized);
 
   return (
     isAuthorized ? children : <Navigate to="/login" state={{ from: location }} />

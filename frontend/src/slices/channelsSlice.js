@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { channelsList: [], _currentChannelId: null };
+const initialState = { channelsList: [], currentChannelId: '1' };
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -11,6 +11,9 @@ const channelsSlice = createSlice({
     },
     addChannel: (state, action) => {
       state.channelsList.push(action.payload);
+    },
+    setCurrentChannel: (state, action) => {
+      state.currentChannelId = action.payload;
     },
     removeChannel(state, action) {
       const { id } = action.payload;
@@ -29,6 +32,7 @@ const channelsSlice = createSlice({
 export const {
   getChannels,
   addChannel,
+  setCurrentChannel,
   removeChanel,
   renameChanel,
 } = channelsSlice.actions;

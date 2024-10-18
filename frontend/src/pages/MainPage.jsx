@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth.jsx';
 import { fetchChannels, fetchMessages } from '../services/chat.js';
+import ChatForm from '../components/ChatForm.jsx';
+import { setCurrentChannel } from '../slices/channelsSlice.js';
 
 const MainPage = () => {
   const { user, logOut } = useAuth();
 
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels);
-  const messages = useSelector((state) => state.messages);
 
-  const [activeChannelId, setActiveChannelId] = useState(null);
-  const [activeChannelName, setActiveChannelName] = useState('general');
-  // const activeChannelName = channels
-  //   .channelsList.find((el) => el.id === activeChannelId)?.name || 'general';
+  const { channels: { channelsList, currentChannelId } } = useSelector((state) => state);
+  const { messages: { messagesList } } = useSelector((state) => state.messages);
+
+  const activeChannelName = channelsList.find((el) => el.id === currentChannelId)?.name || 'general';
+
+  const activeMessages = messagesList
+    .filter(({ channelId }) => channelId === currentChannelId);
 
   useEffect(() => {
     if (!user) return;
@@ -23,13 +26,12 @@ const MainPage = () => {
     fetchMessages(token, dispatch);
   }, [user, dispatch]);
 
-  // Устанавливаем активный канал при загрузке данных
-  useEffect(() => {
-    if (channels.channelsList.length > 0) {
-      setActiveChannelId(channels.channelsList[0].id);
-      setActiveChannelName(channels.channelsList[0].name);
-    }
-  }, [channels]);
+  // useEffect(() => {
+  //   if (channelsList.length > 0 && !currentChannelId) {
+  //     const firstChannelId = channelsList[0].id;
+  //     dispatch(setCurrentChannel(firstChannelId));
+  //   }
+  // }, [channelsList, currentChannelId, dispatch]);
 
   return (
     <div className="bg-light">
@@ -77,23 +79,20 @@ const MainPage = () => {
                     className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
                     style={{ minHeight: '74vh' }}
                   >
-                    {channels.channelsList.map((element) => (
+                    {channelsList.map(({ name, id }) => (
                       <li
-                        key={element.id}
+                        key={id}
                         className="nav-item w-100"
                         style={{ listStyleType: 'none', paddingLeft: 0 }} // Убираем маркер и отступ
                       >
                         <button
-                          onClick={() => {
-                            setActiveChannelId(element.id);
-                            setActiveChannelName(element.name);
-                          }}
+                          onClick={() => dispatch(setCurrentChannel(id))}
                           type="button"
                           className={`w-100 rounded-0 text-start btn d-flex align-items-center justify-content-center
-                            ${element.id === activeChannelId ? 'btn-secondary' : ''}`}
+                            ${id === currentChannelId ? 'btn-secondary' : ''}`}
                         >
                           <span className="me-1">#</span>
-                          {element.name}
+                          {name}
                         </button>
                       </li>
                     ))}
@@ -108,42 +107,25 @@ const MainPage = () => {
                       </b>
                     </p>
                     <span className="text-muted">
-                      {`${messages.messagesList.length} сообщений`}
+                      {`${activeMessages.length} сообщений`}
                     </span>
                   </div>
                   <div
                     id="messages-box"
                     className="chat-messages overflow-auto px-5"
                     style={{ minHeight: '63vh' }}
-                  />
-                  <div className="mt-auto px-5 py-3">
-                    <form noValidate className="py-1 border rounded-2">
-                      <div className="input-group has-validation">
-                        <input
-                          name="body"
-                          aria-label="Новое сообщение"
-                          placeholder="Введите сообщение..."
-                          className="border-0 p-0 ps-2 form-control"
-                          value=""
-                        />
-                        <button type="submit" disabled className="btn btn-group-vertical">
-                          <svg
-                            // xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            height="20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"
-                            />
-                          </svg>
-                          <span className="visually-hidden">Отправить</span>
-                        </button>
+                  >
+                    {activeMessages.map(({ body: { message }, username, id }) => (
+                      <div
+                        key={id}
+                        className="text-break mb-2"
+                      >
+                        <b>{username}</b>
+                        {`: ${message}`}
                       </div>
-                    </form>
+                    ))}
                   </div>
+                  <ChatForm />
                 </div>
               </div>
             </div>
