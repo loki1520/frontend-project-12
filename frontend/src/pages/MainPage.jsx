@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth.jsx';
 import { fetchChannels, fetchMessages } from '../services/chat.js';
 import ChatForm from '../components/ChatForm.jsx';
+import socket from '../socket.js';
 
 const MainPage = () => {
   const { user, logOut } = useAuth();
@@ -17,6 +18,11 @@ const MainPage = () => {
   //   .channelsList.find((el) => el.id === activeChannelId)?.name || 'general';
 
   useEffect(() => {
+    socket.on('connect', () => {
+      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      console.log(socket.connected); // true
+    });
+
     if (!user) return;
     const { token } = user;
 
