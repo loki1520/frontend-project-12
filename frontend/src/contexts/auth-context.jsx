@@ -6,9 +6,9 @@ import {
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from './index.jsx';
-import LogLocation from '../components/LogLocation.jsx';
 
 const AuthProvider = ({ children }) => {
+  console.count();
   const [user, setUser] = useState(null);
 
   const location = useLocation();
@@ -39,7 +39,6 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      <LogLocation />
       {children}
     </AuthContext.Provider>
   );

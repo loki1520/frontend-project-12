@@ -10,8 +10,8 @@ const MainPage = () => {
 
   const dispatch = useDispatch();
 
-  const { channels: { channelsList, currentChannelId } } = useSelector((state) => state);
-  const { messages: { messagesList } } = useSelector((state) => state.messages);
+  const { channelsList, currentChannelId } = useSelector((state) => state.channels);
+  const { messagesList } = useSelector((state) => state.messages);
 
   const activeChannelName = channelsList.find((el) => el.id === currentChannelId)?.name || 'general';
 
@@ -25,13 +25,6 @@ const MainPage = () => {
     fetchChannels(token, dispatch);
     fetchMessages(token, dispatch);
   }, [user, dispatch]);
-
-  // useEffect(() => {
-  //   if (channelsList.length > 0 && !currentChannelId) {
-  //     const firstChannelId = channelsList[0].id;
-  //     dispatch(setCurrentChannel(firstChannelId));
-  //   }
-  // }, [channelsList, currentChannelId, dispatch]);
 
   return (
     <div className="bg-light">
