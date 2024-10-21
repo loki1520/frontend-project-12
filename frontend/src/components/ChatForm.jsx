@@ -19,10 +19,6 @@ const ChatForm = () => {
   }, [currentChannelId]); // доб. отслеживае, чтобы при изменении канала фокус выставлялся заново!
 
   useEffect(() => {
-    socket.on('hello', () => {
-      console.log('hello world!');
-    });
-
     socket.on('newMessage', (newMessage) => {
       // console.log(socket.id); // x8WIv7-mJelg7on_ALbx
       // console.log(socket.connected); // true
