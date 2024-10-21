@@ -14,9 +14,15 @@ const ChatForm = () => {
   const dispatch = useDispatch();
 
   const inputRef = useRef();
+
+  const currentState = useSelector((state) => state);
+  useEffect(() => {
+    console.log('Updated Redux State:', currentState);
+  }, [currentState]); // это отследит изменения в стейте
+
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentChannelId]); // доб. отслеживае, чтобы при изменении канала фокус выставлялся заново!
+  }, [currentChannelId]); // доб. отслеживание, чтобы при изменении канала фокус выставлялся заново!
 
   useEffect(() => {
     socket.on('newMessage', (newMessage) => {
@@ -46,11 +52,12 @@ const ChatForm = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }).then((response) => {
-        console.log(response.data);
+      // }).then((response) => {
+      //   console.log(response.data);
         // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
       });
       actions.resetForm();
+      inputRef.current.focus();
     },
   });
 
@@ -78,6 +85,7 @@ const ChatForm = () => {
             disabled={formik.isSubmitting || !formik.values.message.trim()}
             type="submit"
             className="btn btn-group-vertical"
+            variant="outline-primary"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

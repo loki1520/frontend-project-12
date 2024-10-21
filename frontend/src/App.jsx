@@ -7,6 +7,7 @@ import {
 import { Provider } from 'react-redux';
 import LoginPage from './pages/LoginPage.jsx';
 import MainPage from './pages/MainPage.jsx';
+import SignupPage from './pages/SignupPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import AuthProvider from './contexts/auth-context.jsx';
 import useAuth from './hooks/useAuth.jsx';
@@ -27,6 +28,7 @@ const App = () => (
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route
             path="/"
