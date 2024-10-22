@@ -2,7 +2,7 @@ install:
 	npm ci
 
 start:
-	npx start-server & npm -C frontend start
+	npm start
 
 build:
 	npm build
