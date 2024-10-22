@@ -15,11 +15,6 @@ const ChatForm = () => {
 
   const inputRef = useRef();
 
-  const currentState = useSelector((state) => state);
-  useEffect(() => {
-    console.log('Updated Redux State:', currentState);
-  }, [currentState]); // это отследит изменения в стейте
-
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]); // доб. отслеживание, чтобы при изменении канала фокус выставлялся заново!

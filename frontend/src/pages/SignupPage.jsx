@@ -20,6 +20,7 @@ const RegistrationPage = () => {
       password: '',
       passwordConfirm: '',
     },
+
     validationSchema: Yup.object({
       username: Yup.string()
         .min(3, 'От 3 до 20 символов')
@@ -31,6 +32,7 @@ const RegistrationPage = () => {
       passwordConfirm: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
     }),
+
     onSubmit: async (values, actions) => {
       const { confirmPassword, ...dataToSend } = values;
       try {
@@ -39,7 +41,6 @@ const RegistrationPage = () => {
         actions.resetForm();
         navigate('/', { state: { from: location } });
       } catch (error) {
-        console.error('Ошибка:', error);
         if (error.response && error.response.status === 409) {
           actions.setErrors({ userAlreadyExists: 'Такой пользователь уже существует' });
         }
@@ -47,7 +48,7 @@ const RegistrationPage = () => {
       }
     },
   });
-  console.log(formik.errors);
+
   return (
     <div className="h-100 bg-light">
       <div className="h-100">
@@ -117,6 +118,7 @@ const RegistrationPage = () => {
                           {formik.touched.password && formik.errors.password ? (
                             <div className="invalid-tooltip">{formik.errors.password}</div>
                           ) : null}
+
                         </Form.Group>
                         <Form.Group className="form-floating mb-4">
                           <Form.Control
@@ -156,6 +158,7 @@ const RegistrationPage = () => {
                               {formik.errors.userAlreadyExists}
                             </div>
                           ) : null} */}
+
                         </Form.Group>
                         <Button disabled={formik.isSubmitting} type="submit" className="w-100" variant="outline-primary">
                           Зарегистрироваться
