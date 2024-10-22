@@ -18,7 +18,7 @@ const RegistrationPage = () => {
     initialValues: {
       username: '',
       password: '',
-      passwordConfirmation: '',
+      passwordConfirm: '',
     },
     validationSchema: Yup.object({
       username: Yup.string()
@@ -28,7 +28,7 @@ const RegistrationPage = () => {
       password: Yup.string()
         .min(6, 'Не менее 6 символов')
         .required('Обязательное поле'),
-      passwordConfirmation: Yup.string()
+      passwordConfirm: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
     }),
     onSubmit: async (values, actions) => {
@@ -120,24 +120,24 @@ const RegistrationPage = () => {
                         </Form.Group>
                         <Form.Group className="form-floating mb-4">
                           <Form.Control
-                            name="passwordConfirmation"
-                            id="passwordConfirmation"
+                            name="passwordConfirm"
+                            id="passwordConfirm"
                             type="password"
                             required
                             placeholder="Пароль"
                             className={classNames('form-control', {
-                              'is-invalid': (formik.errors.passwordConfirmation && formik.touched.passwordConfirmation) || formik.errors.userAlreadyExists,
+                              'is-invalid': (formik.errors.passwordConfirm && formik.touched.passwordConfirm) || formik.errors.userAlreadyExists,
                             })}
-                            autoComplete="current-passwordConfirmation"
+                            autoComplete="current-passwordConfirm"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            value={formik.values.passwordConfirmation}
+                            value={formik.values.passwordConfirm}
                           />
-                          <Form.Label htmlFor="passwordConfirmation">Подтвердите пароль</Form.Label>
+                          <Form.Label htmlFor="passwordConfirm">Подтвердите пароль</Form.Label>
 
-                          {formik.touched.passwordConfirmation
-                            && formik.errors.passwordConfirmation ? (
-                              <div className="invalid-tooltip">{formik.errors.passwordConfirmation}</div>
+                          {formik.touched.passwordConfirm
+                            && formik.errors.passwordConfirm ? (
+                              <div className="invalid-tooltip">{formik.errors.passwordConfirm}</div>
                             ) : null}
 
                           {formik.errors.userAlreadyExists ? (
