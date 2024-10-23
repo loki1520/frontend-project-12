@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth.jsx';
 import { fetchChannels, fetchMessages } from '../services/chat.js';
 import ChatForm from '../components/ChatForm.jsx';
+import ModalWindow from '../modals/ModalWindow.jsx';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
+import { openModal } from '../slices/modalsSlice.js';
 
 const MainPage = () => {
   const { user, logOut } = useAuth();
@@ -53,7 +55,7 @@ const MainPage = () => {
                 <div className="col-4 col-md-2 border-end px-0 bg-light d-flex flex-column h-100">
                   <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
                     <b>Каналы</b>
-                    <button type="button" className="p-0 text-primary btn btn-group-vertical">
+                    <button onClick={() => dispatch(openModal({ type: 'adding' }))} type="button" className="p-0 text-primary btn btn-group-vertical">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16"
@@ -76,13 +78,11 @@ const MainPage = () => {
                       <li
                         key={id}
                         className="nav-item w-100"
-                        style={{ listStyleType: 'none', paddingLeft: 0 }} // Убираем маркер и отступ
                       >
                         <button
                           onClick={() => dispatch(setCurrentChannel(id))}
                           type="button"
-                          className={`w-100 rounded-0 text-start btn d-flex align-items-center justify-content-center
-                            ${id === currentChannelId ? 'btn-secondary' : ''}`}
+                          className={`w-100 rounded-0 text-start btn ${id === currentChannelId ? 'btn-secondary' : ''}`}
                         >
                           <span className="me-1">#</span>
                           {name}
@@ -125,6 +125,7 @@ const MainPage = () => {
           </div>
         </div>
       </div>
+      <ModalWindow />
     </div>
   );
 };

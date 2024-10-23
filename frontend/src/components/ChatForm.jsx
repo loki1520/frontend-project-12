@@ -49,7 +49,7 @@ const ChatForm = () => {
         },
       // }).then((response) => {
       //   console.log(response.data);
-        // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
+      // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
       });
       actions.resetForm();
       inputRef.current.focus();
