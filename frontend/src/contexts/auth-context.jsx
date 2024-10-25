@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from './index.jsx';
 
 const AuthProvider = ({ children }) => {
-  console.count();
+  // console.count();
   const [user, setUser] = useState(null);
 
   const location = useLocation();

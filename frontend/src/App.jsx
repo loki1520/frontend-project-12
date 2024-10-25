@@ -10,7 +10,7 @@ import MainPage from './pages/MainPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import AuthProvider from './contexts/auth-context.jsx';
-import useAuth from './hooks/useAuth.jsx';
+import useAuth from './hooks/useAuth.js';
 import store from './slices/store.js';
 
 const PrivateRoute = ({ children }) => {

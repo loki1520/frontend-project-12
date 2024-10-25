@@ -4,25 +4,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { addMessage } from '../slices/messagesSlice.js';
-import useAuth from '../hooks/useAuth.jsx';
+import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 import socket from '../socket.js';
 
 const ChatForm = () => {
+  const dispatch = useDispatch();
   const { user } = useAuth();
   const { currentChannelId } = useSelector((state) => state.channels);
-  const dispatch = useDispatch();
+  const isModalOpen = useSelector((state) => state.modals.isOpen);
 
+  // доб. отслеживание, чтобы при изменении канала фокус выставлялся заново
+  // добав проверку на isModalOpen, т.к. актив канал меняется при открытом модальном окне
+  // и в это время невозможно сфокусироваться на поле формы сообщений
   const inputRef = useRef();
-
   useEffect(() => {
-    inputRef.current.focus();
-  }, [currentChannelId]); // доб. отслеживание, чтобы при изменении канала фокус выставлялся заново!
+    console.log(currentChannelId);
+    if (!isModalOpen) {
+      inputRef.current.focus();
+    }
+  }, [isModalOpen, currentChannelId]);
 
   useEffect(() => {
     socket.on('newMessage', (newMessage) => {
-      // console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-      // console.log(socket.connected); // true
+      // newMessage => => { body: "new message", channelId: 7, id: 8, username: "admin" }
       dispatch(addMessage(newMessage));
     });
 
@@ -35,24 +40,25 @@ const ChatForm = () => {
     initialValues: {
       message: '',
     },
-    onSubmit: (values, actions) => {
+    onSubmit: async (values, actions) => {
       if (!user) {
-        console.error('something with token in chatForm');
+        console.error('Вы не авторизованы');
         return;
       }
       const { username, token } = user;
-
       const newMessage = { body: values, channelId: currentChannelId, username };
-      axios.post(routes.messagesPath(), newMessage, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      // }).then((response) => {
-      //   console.log(response.data);
-      // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
-      });
-      actions.resetForm();
-      inputRef.current.focus();
+      try {
+        await axios.post(routes.messagesPath(), newMessage, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        // => { id: '1', body: 'new message', channelId: '1', username: 'admin }
+        });
+        actions.resetForm();
+        inputRef.current.focus();
+      } catch (error) {
+        console.error('Ошибка отправки сообщения', error);
+      }
     },
   });
 

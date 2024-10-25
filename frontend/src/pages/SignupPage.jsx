@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Form, Button, Card } from 'react-bootstrap';
 import classNames from 'classnames';
 import axios from 'axios';
-import useAuth from '../hooks/useAuth.jsx';
+import useAuth from '../hooks/useAuth.js';
 import congratImg from '../assets/congrat.png';
 import routes from '../routes.js';
 

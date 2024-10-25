@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import classNames from 'classnames';
 import axios from 'axios';
-import useAuth from '../hooks/useAuth.jsx';
+import useAuth from '../hooks/useAuth.js';
 import loginImg from '../assets/login.png';
 import routes from '../routes.js';
 
@@ -10,7 +10,9 @@ const LoginPage = () => {
   const { location, navigate } = useAuth();
 
   const inputRef = useRef();
-  useEffect(() => { inputRef.current.focus(); }, []);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -20,6 +22,7 @@ const LoginPage = () => {
     onSubmit: async (values, actions) => {
       try {
         const response = await axios.post(routes.loginPath(), values);
+        // response.data => {token: 'eyJhbGciOiJIUzI1NiIcC...tEhfmdQaTA8vC-055o', username: 'admin'}
         localStorage.setItem('userData', JSON.stringify(response.data));
         actions.resetForm();
         navigate('/', { state: { from: location } });

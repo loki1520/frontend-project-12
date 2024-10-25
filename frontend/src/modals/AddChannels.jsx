@@ -9,40 +9,64 @@ import {
 import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import axios from 'axios';
+import socket from '../socket.js';
+import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
+import { addChannel, setCurrentChannel } from '../slices/channelsSlice.js';
+import useAuth from '../hooks/useAuth.js';
 
 const AddChannels = () => {
-  const channelsList = useSelector((state) => state.channels.channelsList);
-  const names = channelsList.map((channel) => channel.name);
-
+  const { user: { token } } = useAuth();
   const dispatch = useDispatch();
-  const handleClose = () => dispatch(closeModal());
+
+  const channelsList = useSelector((state) => state.channels.channelsList);
+  const channelsNames = channelsList.map((channel) => channel.name);
 
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
+  useEffect(() => {
+    socket.on('newChannel', (newChannel) => {
+      // newChannel => { id: 6, name: "new channel", removable: true }
+      dispatch(addChannel(newChannel));
+      dispatch(setCurrentChannel(newChannel.id));
+    });
+    return () => {
+      socket.off('newChannel');
+    };
+  }, [dispatch]);
+
   const formik = useFormik({
     initialValues: {
-      channelName: '',
+      name: '',
     },
-
     validationSchema: Yup.object({
-      channelName: Yup.string()
+      name: Yup.string()
         .min(3, 'От 3 до 20 символов')
         .max(20, 'От 3 до 20 символов')
         .required('Обязательное поле')
-        .notOneOf(names, 'Должно быть уникальным'),
+        .notOneOf(channelsNames, 'Должно быть уникальным'),
     }),
-
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      try {
+        await axios.post(routes.channelsPath(), values, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        // => { id: '3', name: 'new channel', removable: true }
+        dispatch(closeModal());
+      } catch (error) {
+        console.error('Ошибка при добавлении канала', error);
+      }
     },
   });
 
   return (
-    <Modal show centered onHide={handleClose}>
+    <Modal show centered onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
         <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>
@@ -51,19 +75,19 @@ const AddChannels = () => {
           <FormGroup>
             <FormControl
               ref={inputRef}
-              id="channelName"
-              name="channelName"
+              id="name"
+              name="name"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.channelName}
+              value={formik.values.name}
               className={classNames('form-control', 'mb-2', {
-                'is-invalid': formik.errors.channelName && formik.submitCount > 0,
+                'is-invalid': formik.errors.name && formik.submitCount > 0,
               })}
             />
 
-            {formik.errors.channelName ? (
-              <div className="invalid-feedback">{formik.errors.channelName}</div>
+            {formik.errors.name ? (
+              <div className="invalid-feedback">{formik.errors.name}</div>
             ) : null}
 
           </FormGroup>
@@ -71,7 +95,7 @@ const AddChannels = () => {
             <button
               type="button"
               className="me-2 btn btn-secondary"
-              onClick={handleClose}
+              onClick={() => dispatch(closeModal())}
             >
               Отменить
             </button>

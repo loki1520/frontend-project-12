@@ -14,15 +14,15 @@ const messagesSlice = createSlice({
     },
     removeMessage(state, action) {
       const { id } = action.payload;
-      state.messagesList = state.messagesList.filter((message) => message.id !== id);
+      state.messagesList = state.messagesList.filter((message) => message.channelId !== id);
     },
-    renameMessage(state, action) {
-      const { id, newText } = action.payload;
-      const currentMessage = state.messagesList.find((message) => message.id === id);
-      if (currentMessage) {
-        currentMessage.text = newText;
-      }
-    },
+    // renameMessage(state, action) {
+    //   const { id, newText } = action.payload;
+    //   const currentMessage = state.messagesList.find((message) => message.id === id);
+    //   if (currentMessage) {
+    //     currentMessage.text = newText;
+    //   }
+    // },
   },
 });
 
