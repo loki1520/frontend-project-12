@@ -13,7 +13,7 @@ import axios from 'axios';
 import socket from '../socket.js';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
-import { addChannel, setCurrentChannel } from '../slices/channelsSlice.js';
+import { addChannel } from '../slices/channelsSlice.js';
 import useAuth from '../hooks/useAuth.js';
 
 const AddChannels = () => {
@@ -32,7 +32,6 @@ const AddChannels = () => {
     socket.on('newChannel', (newChannel) => {
       // newChannel => { id: 6, name: "new channel", removable: true }
       dispatch(addChannel(newChannel));
-      dispatch(setCurrentChannel(newChannel.id));
     });
     return () => {
       socket.off('newChannel');

@@ -6,47 +6,23 @@ import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 import socket from '../socket.js';
 import { closeModal } from '../slices/modalsSlice.js';
-import { removeChannel, setCurrentChannel } from '../slices/channelsSlice.js';
-import { removeMessage } from '../slices/messagesSlice.js';
+import { removeChannel } from '../slices/channelsSlice.js';
 
 const RemoveChannel = () => {
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
   const removingChannelId = useSelector((state) => state.modals.removingChannelId);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   useEffect(() => {
-    const handleRemoveChannel = (payload) => {
-      console.log('payload 🍀===>>', payload);
-
-      // Проверка на наличие данных
-      if (payload) {
-        const { id } = payload; // Извлечение ID канала
-
-        // Удаляем канал
-        dispatch(removeChannel(payload));
-
-        // Переключаем текущий канал
-        if (currentChannelId === id) {
-          dispatch(setCurrentChannel(1)); // Если удаляемый канал текущий, переключаем на первый
-        } else {
-          dispatch(setCurrentChannel(id)); // Иначе переключаем на удаляемый
-        }
-
-        // Удаляем сообщения связанного канала
-        dispatch(removeMessage(payload));
-      } else {
-        console.error('Payload or payload.data is undefined:', payload);
-      }
-    };
-
-    socket.on('removeChannel', handleRemoveChannel); // Подписка на событие
-
+    socket.on('removeChannel', (payload) => {
+      // payload.data => { id: 6 }
+      dispatch(removeChannel(payload));
+    });
     return () => {
-      socket.off('removeChannel', handleRemoveChannel); // Отписка от события при размонтировании
+      socket.off('newChannel');
     };
-  }, [currentChannelId, dispatch]);
+  }, [dispatch]);
 
   const handledRemoveChannel = async () => {
     try {

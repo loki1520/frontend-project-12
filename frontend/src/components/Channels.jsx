@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
@@ -12,14 +12,6 @@ const Channels = () => {
   const { user } = useAuth();
 
   const { channelsList, currentChannelId } = useSelector((state) => state.channels);
-
-  const channelsBoxRef = useRef(null); // Реф на контейнер с сообщениями
-  useEffect(() => {
-    // Прокрутка контейнера вниз при изменении сообщений
-    if (channelsBoxRef.current) {
-      channelsBoxRef.current.scrollTop = channelsBoxRef.current.scrollHeight;
-    }
-  }, [channelsList]);
 
   useEffect(() => {
     if (!user) return;
@@ -62,7 +54,6 @@ const Channels = () => {
         </button>
       </div>
       <ul
-        ref={channelsBoxRef}
         id="channels-box"
         className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
         style={{ maxHeight: '74vh', minHeight: '74vh' }}
