@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { openModal } from '../slices/modalsSlice.js';
-import { getChannels, setCurrentChannel } from '../slices/channelsSlice.js';
+import { getChannels } from '../slices/channelsSlice.js';
+import Channel from './Channel.jsx';
 
 const Channels = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
 
-  const { channelsList, currentChannelId } = useSelector((state) => state.channels);
+  const { channelsList } = useSelector((state) => state.channels);
 
   useEffect(() => {
     if (!user) return;
@@ -22,7 +22,7 @@ const Channels = () => {
         const responseChannels = await axios.get(routes.channelsPath(), {
           headers: { Authorization: `Bearer ${token}` },
         });
-        // [{ id: '1', name: 'general', removable: false }, ...]
+        // => [{ id: '1', name: 'general', removable: false }, ...]
         dispatch(getChannels(responseChannels.data));
       } catch (error) {
         console.error('Ошибка при получении каналов:', error);
@@ -58,43 +58,9 @@ const Channels = () => {
         className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
         style={{ maxHeight: '74vh', minHeight: '74vh' }}
       >
-        {channelsList.map(({ name, id, removable }) => {
-          // here is norm?!!!!! will check...
-          const originalButton = () => (
-            <button
-              onClick={() => dispatch(setCurrentChannel(id))}
-              type="button"
-              className={`w-100 rounded-0 text-start text-truncate btn ${id === currentChannelId ? 'btn-secondary' : ''}`}
-            >
-              <span className="me-1">#</span>
-              {name}
-            </button>
-          );
-          return (
-            <li
-              key={id}
-              className="nav-item w-100"
-            >
-              {!removable ? (
-                originalButton()
-              ) : (
-                <Dropdown className="d-flex" as={ButtonGroup}>
-                  { originalButton() }
-                  <Dropdown.Toggle
-                    variant={id === currentChannelId ? 'secondary' : 'light'}
-                    className="flex-grow-0"
-                    split
-                    id="dropdown-split-basic"
-                  />
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removing', id }))}>Удалить</Dropdown.Item>
-                    <Dropdown.Item>Переименовать</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </li>
-          );
-        })}
+        {channelsList.map(({ name, id, removable }) => (
+          <Channel name={name} key={id} id={id} removable={removable} />
+        ))}
       </ul>
     </div>
   );

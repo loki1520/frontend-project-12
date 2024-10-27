@@ -12,11 +12,11 @@ const RemoveChannel = () => {
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
-  const removingChannelId = useSelector((state) => state.modals.removingChannelId);
+  const clickedChannelId = useSelector((state) => state.modals.clickedChannelId);
 
   useEffect(() => {
     socket.on('removeChannel', (payload) => {
-      // payload.data => { id: 6 }
+      // payload => { id: 6 }
       dispatch(removeChannel(payload));
     });
     return () => {
@@ -26,7 +26,7 @@ const RemoveChannel = () => {
 
   const handledRemoveChannel = async () => {
     try {
-      await axios.delete(routes.removeChannelsPath(removingChannelId), {
+      await axios.delete(routes.removeChannelsPath(clickedChannelId), {
         headers: {
           Authorization: `Bearer ${token}`,
         },

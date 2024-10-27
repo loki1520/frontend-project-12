@@ -12,13 +12,13 @@ const modalsSlice = createSlice({
         state.modalType = action.payload.type;
       }
       if (action.payload.id) {
-        state.removingChannelId = action.payload.id;
+        state.clickedChannelId = action.payload.id;
       }
     },
     closeModal: (state) => {
       state.isOpen = false;
       state.modalType = null;
-      state.removingChannelId = null;
+      state.clickedChannelId = null;
     },
   },
 });

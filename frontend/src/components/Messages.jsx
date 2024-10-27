@@ -18,8 +18,8 @@ const Messages = ({ children }) => {
     .filter(({ channelId }) => channelId === currentChannelId);
 
   const messagesBoxRef = useRef(null); // Реф на контейнер с сообщениями
+  // Прокрутка контейнера вниз при изменении сообщений
   useEffect(() => {
-    // Прокрутка контейнера вниз при изменении сообщений
     if (messagesBoxRef.current) {
       messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight;
     }
@@ -33,7 +33,7 @@ const Messages = ({ children }) => {
         const responseMessages = await axios.get(routes.messagesPath(), {
           headers: { Authorization: `Bearer ${token}` },
         });
-        // [{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
+        // => [{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
         dispatch(getMessages(responseMessages.data));
       } catch (error) {
         console.error('Ошибка при получении сообщений:', error);
@@ -70,7 +70,8 @@ const Messages = ({ children }) => {
           </div>
         ))}
       </div>
-      {/* Для ChatForm */}
+      {/* children для ChatForm... или лучше не закидывать все через главную страницу,
+        а сразу тут вставить этот компонент ?? */}
       {children}
     </div>
   );

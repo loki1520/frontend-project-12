@@ -24,13 +24,13 @@ const channelsSlice = createSlice({
         state.currentChannelId = '1';
       }
     },
-    // renameChannel(state, action) {
-    //   const { id, newText } = action.payload;
-    //   const currentMessage = state.channelsList.find((el) => el.id === id);
-    //   if (currentMessage) {
-    //     currentMessage.text = newText;
-    //   }
-    // },
+    renameChannel(state, action) {
+      const { id, name } = action.payload;
+      const currentChannel = state.channelsList.find((el) => el.id === id);
+      if (currentChannel) {
+        currentChannel.name = name;
+      }
+    },
   },
 });
 

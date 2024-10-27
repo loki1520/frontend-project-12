@@ -146,19 +146,6 @@ const RegistrationPage = () => {
                             <div className="invalid-tooltip">{formik.errors.userAlreadyExists}</div>
                           ) : null}
 
-                          {/* {formik.errors.userAlreadyExists ? (
-                            <div
-                              className="invalid-tooltip"
-                              style={{
-                                display: 'block', // Элемент будет всегда видим
-                                position: 'absolute', // Можно изменить на absolute или relative
-                                marginTop: '2px', // Отступ сверху
-                              }}
-                            >
-                              {formik.errors.userAlreadyExists}
-                            </div>
-                          ) : null} */}
-
                         </Form.Group>
                         <Button disabled={formik.isSubmitting} type="submit" className="w-100" variant="outline-primary">
                           Зарегистрироваться

@@ -13,17 +13,6 @@ const messagesSlice = createSlice({
     addMessage: (state, action) => {
       state.messagesList.push(action.payload);
     },
-    // removeMessage(state, action) {
-    //   const { id } = action.payload;
-    //   state.messagesList = state.messagesList.filter((message) => message.channelId !== id);
-    // },
-    // renameMessage(state, action) {
-    //   const { id, newText } = action.payload;
-    //   const currentMessage = state.messagesList.find((message) => message.id === id);
-    //   if (currentMessage) {
-    //     currentMessage.text = newText;
-    //   }
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -37,8 +26,6 @@ const messagesSlice = createSlice({
 export const {
   getMessages,
   addMessage,
-  removeMessage,
-  renameMessage,
 } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

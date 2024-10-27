@@ -29,9 +29,16 @@ const AddChannels = () => {
   }, []);
 
   useEffect(() => {
-    socket.on('newChannel', (newChannel) => {
-      // newChannel => { id: 6, name: "new channel", removable: true }
-      dispatch(addChannel(newChannel));
+    // test 1-4
+    if (socket.connected) {
+      console.log('WebSocket connected');
+    } else {
+      console.error('WebSocket error');
+    }
+
+    socket.on('newChannel', (payload) => {
+      // payload => { id: 6, name: "new channel", removable: true }
+      dispatch(addChannel(payload));
     });
     return () => {
       socket.off('newChannel');
@@ -57,6 +64,15 @@ const AddChannels = () => {
           },
         });
         // => { id: '3', name: 'new channel', removable: true }
+
+        // test #2
+        await axios.get('/api/v1/channels', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((response) => {
+          console.log(response.data);
+        });
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);

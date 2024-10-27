@@ -13,7 +13,7 @@ const NotFoundPage = () => (
       <div className="text-center">
         <img
           alt="Страница не найдена"
-          className="w-25 img-fluid" // Устанавливаем ширину в 25%
+          className="w-25 img-fluid"
           src={loginImg}
         />
         <h1 className="h4 text-muted">Страница не найдена</h1>
