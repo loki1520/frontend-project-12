@@ -66,13 +66,13 @@ const AddChannels = () => {
         // => { id: '3', name: 'new channel', removable: true }
 
         // test #2
-        await axios.get('/api/v1/channels', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((response) => {
-          console.log(response.data);
-        });
+        // await axios.get('/api/v1/channels', {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }).then((response) => {
+        //   console.log(response.data);
+        // });
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);
