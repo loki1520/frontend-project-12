@@ -16,7 +16,7 @@ import { closeModal } from '../slices/modalsSlice.js';
 import { addChannel } from '../slices/channelsSlice.js';
 import useAuth from '../hooks/useAuth.js';
 
-const AddChannels = () => {
+const AddChannel = () => {
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
@@ -125,4 +125,4 @@ const AddChannels = () => {
   );
 };
 
-export default AddChannels;
+export default AddChannel;
