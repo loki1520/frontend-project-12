@@ -1,4 +1,3 @@
-import ChatForm from '../components/ChatForm.jsx';
 import ModalWindow from '../modals/ModalWindow.jsx';
 import Header from '../components/Header.jsx';
 import Channels from '../components/Channels.jsx';
@@ -12,9 +11,7 @@ const MainPage = () => (
         <div className="container h-100 my-4 overflow-hidden rounded shadow">
           <div className="row h-100 bg-white flex-md-row">
             <Channels />
-            <Messages>
-              <ChatForm />
-            </Messages>
+            <Messages />
           </div>
         </div>
       </div>

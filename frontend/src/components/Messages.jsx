@@ -4,8 +4,9 @@ import axios from 'axios';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { getMessages } from '../slices/messagesSlice.js';
+import ChatForm from './ChatForm.jsx';
 
-const Messages = ({ children }) => {
+const Messages = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
 
@@ -70,9 +71,7 @@ const Messages = ({ children }) => {
           </div>
         ))}
       </div>
-      {/* children для ChatForm... или лучше не закидывать все через главную страницу,
-        а сразу тут вставить этот компонент ?? */}
-      {children}
+      <ChatForm />
     </div>
   );
 };

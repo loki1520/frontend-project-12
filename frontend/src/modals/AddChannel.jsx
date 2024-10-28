@@ -29,20 +29,18 @@ const AddChannel = () => {
   }, []);
 
   useEffect(() => {
-    // test 1-4
-    if (socket.connected) {
-      console.log('WebSocket connected');
-    } else {
-      console.error('WebSocket error');
-    }
+    socket.on('connect', () => console.log('Socket подключен'));
+    socket.on('disconnect', () => console.warn('Socket отключен'));
 
     socket.on('newChannel', (payload) => {
-      // payload => { id: 6, name: "new channel", removable: true }
+      console.log('Socket: получено новое событие создания канала', payload);
       dispatch(addChannel(payload));
     });
-    socket.emit('newChannel', 'Hello, my name is Client');
+
     return () => {
       socket.off('newChannel');
+      socket.off('connect');
+      socket.off('disconnect');
     };
   }, [dispatch]);
 
@@ -63,17 +61,17 @@ const AddChannel = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
+        }).then((response) => console.log('Ответ от сервера, создание канала', response.data));
         // => { id: '3', name: 'new channel', removable: true }
 
         // test #2
-        // await axios.get('/api/v1/channels', {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }).then((response) => {
-        //   console.log(response.data);
-        // });
+        await axios.get('/api/v1/channels', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((response) => {
+          console.log(response.data);
+        });
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);
