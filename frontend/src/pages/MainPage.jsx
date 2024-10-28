@@ -1,5 +1,5 @@
 import ChatForm from '../components/ChatForm.jsx';
-import ModalWindow from '../modalsChannel/ModalWindow.jsx';
+import ModalWindow from '../modals/ModalWindow.jsx';
 import Header from '../components/Header.jsx';
 import Channels from '../components/Channels.jsx';
 import Messages from '../components/Messages.jsx';
