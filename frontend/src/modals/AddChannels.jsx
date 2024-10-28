@@ -40,6 +40,7 @@ const AddChannels = () => {
       // payload => { id: 6, name: "new channel", removable: true }
       dispatch(addChannel(payload));
     });
+    socket.emit('newChannel', 'Hello, my name is Client');
     return () => {
       socket.off('newChannel');
     };
