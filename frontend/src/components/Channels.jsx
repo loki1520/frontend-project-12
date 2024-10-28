@@ -1,4 +1,9 @@
-import { useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import routes from '../routes';
@@ -13,6 +18,9 @@ const Channels = () => {
 
   const { channelsList } = useSelector((state) => state.channels);
 
+  const channelsRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false); // состояние для отслеживания загрузки
+
   useEffect(() => {
     if (!user) return;
     const { token } = user;
@@ -24,12 +32,26 @@ const Channels = () => {
         });
         // => [{ id: '1', name: 'general', removable: false }, ...]
         dispatch(getChannels(responseChannels.data));
+        setIsLoaded(true); // для запуска useLayoutEffect скролла ПОСЛЕ загрузки
       } catch (error) {
         console.error('Ошибка при получении каналов:', error);
       }
     };
     fetchChannels();
   }, [user, dispatch]);
+
+  useLayoutEffect(() => {
+    if (channelsRef.current && isLoaded) {
+      channelsRef.current.scrollTop = 0;
+    }
+  }, [isLoaded]);
+
+  // Прокрутка вниз при добавлении канала
+  useEffect(() => {
+    if (channelsRef.current) {
+      channelsRef.current.scrollTop = channelsRef.current.scrollHeight;
+    }
+  }, [channelsList]);
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light d-flex flex-column h-100">
@@ -54,6 +76,7 @@ const Channels = () => {
         </button>
       </div>
       <ul
+        ref={channelsRef}
         id="channels-box"
         className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
         style={{ maxHeight: '74vh', minHeight: '74vh' }}

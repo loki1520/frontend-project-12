@@ -10,10 +10,8 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import socket from '../socket.js';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
-import { addChannel } from '../slices/channelsSlice.js';
 import useAuth from '../hooks/useAuth.js';
 
 const AddChannel = () => {
@@ -28,21 +26,21 @@ const AddChannel = () => {
     inputRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    socket.on('connect', () => console.log('Socket подключен'));
-    socket.on('disconnect', () => console.warn('Socket отключен'));
+  // useEffect(() => {
+  //   socket.on('connect', () => console.log('Socket подключен'));
+  //   socket.on('disconnect', () => console.warn('Socket отключен'));
 
-    socket.on('newChannel', (payload) => {
-      console.log('Socket: получено новое событие создания канала', payload);
-      dispatch(addChannel(payload));
-    });
+  //   socket.on('newChannel', (payload) => {
+  //     console.log('Socket: получено новое событие создания канала', payload);
+  //     dispatch(addChannel(payload));
+  //   });
 
-    return () => {
-      socket.off('newChannel');
-      socket.off('connect');
-      socket.off('disconnect');
-    };
-  }, [dispatch]);
+  //   return () => {
+  //     socket.off('newChannel');
+  //     socket.off('connect');
+  //     socket.off('disconnect');
+  //   };
+  // }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
@@ -65,13 +63,13 @@ const AddChannel = () => {
         // => { id: '3', name: 'new channel', removable: true }
 
         // test #2
-        await axios.get('/api/v1/channels', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((response) => {
-          console.log(response.data);
-        });
+        // await axios.get('/api/v1/channels', {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }).then((response) => {
+        //   console.log(response.data);
+        // });
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);

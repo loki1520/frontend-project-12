@@ -1,15 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
-import { addMessage } from '../slices/messagesSlice.js';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
-import socket from '../socket.js';
 
 const ChatForm = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { user } = useAuth();
   const { currentChannelId } = useSelector((state) => state.channels);
   const isModalOpen = useSelector((state) => state.modals.isOpen);
@@ -24,17 +22,6 @@ const ChatForm = () => {
       inputRef.current.focus();
     }
   }, [isModalOpen, currentChannelId]);
-
-  useEffect(() => {
-    socket.on('newMessage', (newMessage) => {
-      // newMessage => => { body: "new message", channelId: 7, id: 8, username: "admin" }
-      dispatch(addMessage(newMessage));
-    });
-
-    return () => {
-      socket.off('newMessage');
-    };
-  }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {

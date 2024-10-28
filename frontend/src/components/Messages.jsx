@@ -4,7 +4,7 @@ import axios from 'axios';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { getMessages } from '../slices/messagesSlice.js';
-import ChatForm from './ChatForm.jsx';
+import ChatForm from './MessagesForm.jsx';
 
 const Messages = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,8 @@ const Messages = () => {
   const activeMessages = messagesList
     .filter(({ channelId }) => channelId === currentChannelId);
 
-  const messagesBoxRef = useRef(null); // Реф на контейнер с сообщениями
+  // Реф на контейнер с сообщениями
+  const messagesBoxRef = useRef(null);
   // Прокрутка контейнера вниз при изменении сообщений
   useEffect(() => {
     if (messagesBoxRef.current) {

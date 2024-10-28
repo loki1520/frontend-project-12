@@ -10,11 +10,11 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import socket from '../socket.js';
+// import socket from '../socket.js';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
 import useAuth from '../hooks/useAuth.js';
-import { renameChannel } from '../slices/channelsSlice.js';
+// import { renameChannel } from '../slices/channelsSlice.js';
 
 const RenameChannel = () => {
   const { user: { token } } = useAuth();
@@ -29,23 +29,23 @@ const RenameChannel = () => {
     inputRef.current.focus();
   }, []);
 
-  useEffect(() => {
-  // test 1-4
-    if (socket.connected) {
-      console.log('WebSocket connected');
-    } else {
-      console.error('WebSocket error');
-    }
+  // useEffect(() => {
+  // // test 1-4
+  //   if (socket.connected) {
+  //     console.log('WebSocket connected');
+  //   } else {
+  //     console.error('WebSocket error');
+  //   }
 
-    socket.on('renameChannel', (payload) => {
-      console.log(payload); // { id: 7, name: "new name channel", removable: true }
-      // renameChannel => // { id: 7, name: "new name channel", removable: true }
-      dispatch(renameChannel(payload));
-    });
-    return () => {
-      socket.off('renameChannel');
-    };
-  }, [dispatch]);
+  //   socket.on('renameChannel', (payload) => {
+  //     console.log(payload); // { id: 7, name: "new name channel", removable: true }
+  //     // renameChannel => // { id: 7, name: "new name channel", removable: true }
+  //     dispatch(renameChannel(payload));
+  //   });
+  //   return () => {
+  //     socket.off('renameChannel');
+  //   };
+  // }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
