@@ -10,11 +10,9 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
-// import socket from '../socket.js';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
 import useAuth from '../hooks/useAuth.js';
-// import { renameChannel } from '../slices/channelsSlice.js';
 
 const RenameChannel = () => {
   const { user: { token } } = useAuth();
@@ -28,24 +26,6 @@ const RenameChannel = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  // useEffect(() => {
-  // // test 1-4
-  //   if (socket.connected) {
-  //     console.log('WebSocket connected');
-  //   } else {
-  //     console.error('WebSocket error');
-  //   }
-
-  //   socket.on('renameChannel', (payload) => {
-  //     console.log(payload); // { id: 7, name: "new name channel", removable: true }
-  //     // renameChannel => // { id: 7, name: "new name channel", removable: true }
-  //     dispatch(renameChannel(payload));
-  //   });
-  //   return () => {
-  //     socket.off('renameChannel');
-  //   };
-  // }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
@@ -64,19 +44,8 @@ const RenameChannel = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }).then((response) => {
-          console.log('rename', response.data); // => { id: '3', name: 'new name channel', removable: true }
         });
         // => { id: '3', name: 'new channel', removable: true }
-
-        // test #2
-        // await axios.get('/api/v1/channels', {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }).then((response) => {
-        //   console.log(response.data);
-        // });
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);

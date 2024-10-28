@@ -26,22 +26,6 @@ const AddChannel = () => {
     inputRef.current.focus();
   }, []);
 
-  // useEffect(() => {
-  //   socket.on('connect', () => console.log('Socket подключен'));
-  //   socket.on('disconnect', () => console.warn('Socket отключен'));
-
-  //   socket.on('newChannel', (payload) => {
-  //     console.log('Socket: получено новое событие создания канала', payload);
-  //     dispatch(addChannel(payload));
-  //   });
-
-  //   return () => {
-  //     socket.off('newChannel');
-  //     socket.off('connect');
-  //     socket.off('disconnect');
-  //   };
-  // }, [dispatch]);
-
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -59,17 +43,7 @@ const AddChannel = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }).then((response) => console.log('Ответ от сервера, создание канала', response.data));
-        // => { id: '3', name: 'new channel', removable: true }
-
-        // test #2
-        // await axios.get('/api/v1/channels', {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }).then((response) => {
-        //   console.log(response.data);
-        // });
+        });
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);

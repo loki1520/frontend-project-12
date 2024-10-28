@@ -7,7 +7,6 @@ import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 
 const ChatForm = () => {
-  // const dispatch = useDispatch();
   const { user } = useAuth();
   const { currentChannelId } = useSelector((state) => state.channels);
   const isModalOpen = useSelector((state) => state.modals.isOpen);
@@ -17,11 +16,10 @@ const ChatForm = () => {
   // и в это время невозможно сфокусироваться на поле формы сообщений
   const inputRef = useRef();
   useEffect(() => {
-    console.log(currentChannelId);
     if (!isModalOpen) {
       inputRef.current.focus();
     }
-  }, [isModalOpen, currentChannelId]);
+  }, [isModalOpen]);
 
   const formik = useFormik({
     initialValues: {

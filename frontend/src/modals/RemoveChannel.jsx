@@ -1,28 +1,15 @@
-// import { useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
-// import socket from '../socket.js';
 import { closeModal } from '../slices/modalsSlice.js';
-// import { removeChannel } from '../slices/channelsSlice.js';
 
 const RemoveChannel = () => {
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
   const clickedChannelId = useSelector((state) => state.modals.clickedChannelId);
-
-  // useEffect(() => {
-  //   socket.on('removeChannel', (payload) => {
-  //     // payload => { id: 6 }
-  //     dispatch(removeChannel(payload));
-  //   });
-  //   return () => {
-  //     socket.off('removeChannel');
-  //   };
-  // }, [dispatch]);
 
   const handledRemoveChannel = async () => {
     try {
