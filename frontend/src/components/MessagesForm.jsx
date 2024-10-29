@@ -11,15 +11,10 @@ const ChatForm = () => {
   const { currentChannelId } = useSelector((state) => state.channels);
   const isModalOpen = useSelector((state) => state.modals.isOpen);
 
-  // доб. отслеживание, чтобы при изменении канала фокус выставлялся заново
-  // добав проверку на isModalOpen, т.к. актив канал меняется при открытом модальном окне
-  // и в это время невозможно сфокусироваться на поле формы сообщений
   const inputRef = useRef();
   useEffect(() => {
-    if (!isModalOpen) {
-      inputRef.current.focus();
-    }
-  }, [isModalOpen]);
+    inputRef.current.focus();
+  }, [currentChannelId, isModalOpen]);
 
   const formik = useFormik({
     initialValues: {

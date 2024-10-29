@@ -12,13 +12,14 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
+import { setCurrentChannel } from '../slices/channelsSlice.js';
 import useAuth from '../hooks/useAuth.js';
 
 const AddChannel = () => {
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
-  const channelsList = useSelector((state) => state.channels.channelsList);
+  const { channelsList } = useSelector((state) => state.channels);
   const channelsNames = channelsList.map((channel) => channel.name);
 
   const inputRef = useRef();
@@ -39,11 +40,13 @@ const AddChannel = () => {
     }),
     onSubmit: async (values) => {
       try {
-        await axios.post(routes.channelsPath(), values, {
+        const response = await axios.post(routes.channelsPath(), values, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(' response.data.id 🍀===>>', response.data.id);
+        dispatch(setCurrentChannel(response.data.id));
         dispatch(closeModal());
       } catch (error) {
         console.error('Ошибка при добавлении канала', error);

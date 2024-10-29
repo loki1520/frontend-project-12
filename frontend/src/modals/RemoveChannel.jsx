@@ -9,11 +9,11 @@ const RemoveChannel = () => {
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
-  const clickedChannelId = useSelector((state) => state.modals.clickedChannelId);
+  const pressedChannelId = useSelector((state) => state.modals.pressedChannelId);
 
   const handledRemoveChannel = async () => {
     try {
-      await axios.delete(routes.removeChannelsPath(clickedChannelId), {
+      await axios.delete(routes.removeChannelsPath(pressedChannelId), {
         headers: {
           Authorization: `Bearer ${token}`,
         },

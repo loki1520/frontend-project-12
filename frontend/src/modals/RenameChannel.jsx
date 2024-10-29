@@ -20,7 +20,7 @@ const RenameChannel = () => {
 
   const channelsList = useSelector((state) => state.channels.channelsList);
   const channelsNames = channelsList.map((channel) => channel.name);
-  const clickedChannelId = useSelector((state) => state.modals.clickedChannelId);
+  const pressedChannelId = useSelector((state) => state.modals.pressedChannelId);
 
   const inputRef = useRef();
   useEffect(() => {
@@ -40,7 +40,7 @@ const RenameChannel = () => {
     }),
     onSubmit: async (values) => {
       try {
-        await axios.patch(routes.renameChannelsPath(clickedChannelId), values, {
+        await axios.patch(routes.renameChannelsPath(pressedChannelId), values, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

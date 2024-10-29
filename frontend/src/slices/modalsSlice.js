@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { isOpen: false, modalType: '', removingChannelId: '' };
+const initialState = { isOpen: false, modalType: '', pressedChannelId: '' };
 
 const modalsSlice = createSlice({
   name: 'modals',
@@ -12,13 +12,13 @@ const modalsSlice = createSlice({
         state.modalType = action.payload.type;
       }
       if (action.payload.id) {
-        state.clickedChannelId = action.payload.id;
+        state.pressedChannelId = action.payload.id;
       }
     },
     closeModal: (state) => {
       state.isOpen = false;
       state.modalType = null;
-      state.clickedChannelId = null;
+      state.pressedChannelId = null;
     },
   },
 });
