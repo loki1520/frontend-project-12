@@ -2,6 +2,7 @@ import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
@@ -21,7 +22,7 @@ const RemoveChannel = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // => { id: '3'}
+      toast.success(t('toastify.removedChannel'));
       dispatch(closeModal());
     } catch (error) {
       console.error('Ошибка при удалении канала', error);

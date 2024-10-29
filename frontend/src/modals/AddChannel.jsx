@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
@@ -36,10 +37,10 @@ const AddChannel = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(3, t('errors.countSymbols'))
-        .max(20, t('errors.countSymbols'))
-        .required(t('errors.required'))
-        .notOneOf(channelsNames, t('errors.unicumName')),
+        .min(3, t('formikErrors.countSymbols'))
+        .max(20, t('formikErrors.countSymbols'))
+        .required(t('formikErrors.required'))
+        .notOneOf(channelsNames, t('formikErrors.unicumName')),
     }),
     onSubmit: async (values) => {
       try {
@@ -48,6 +49,7 @@ const AddChannel = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        toast.success(t('toastify.addedChannel'));
         dispatch(setCurrentChannel(response.data.id));
         dispatch(closeModal());
       } catch (error) {

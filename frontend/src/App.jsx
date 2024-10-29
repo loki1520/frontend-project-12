@@ -6,7 +6,6 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import initSocket from './socketInit.js';
 import LoginPage from './pages/LoginPage.jsx';
 import MainPage from './pages/MainPage.jsx';

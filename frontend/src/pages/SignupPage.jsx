@@ -27,14 +27,14 @@ const RegistrationPage = () => {
 
     validationSchema: Yup.object({
       username: Yup.string()
-        .min(3, t('errors.countSymbols'))
-        .max(20, t('errors.countSymbols'))
-        .required(t('errors.required')),
+        .min(3, t('formikErrors.countSymbols'))
+        .max(20, t('formikErrors.countSymbols'))
+        .required(t('formikErrors.required')),
       password: Yup.string()
-        .min(6, t('errors.passCountSymbols'))
-        .required(t('errors.required')),
+        .min(6, t('formikErrors.passCountSymbols'))
+        .required(t('formikErrors.required')),
       passwordConfirm: Yup.string()
-        .oneOf([Yup.ref('password'), null], t('errors.passwordConfirmNotOneOff')),
+        .oneOf([Yup.ref('password'), null], t('formikErrors.passwordConfirmNotOneOff')),
     }),
 
     onSubmit: async (values, actions) => {
@@ -46,7 +46,7 @@ const RegistrationPage = () => {
         navigate('/', { state: { from: location } });
       } catch (error) {
         if (error.response && error.response.status === 409) {
-          actions.setErrors({ userAlreadyExists: t('errors.userAlreadyExists') });
+          actions.setErrors({ userAlreadyExists: t('formikErrors.userAlreadyExists') });
         }
         throw error;
       }

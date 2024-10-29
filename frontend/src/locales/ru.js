@@ -23,7 +23,7 @@ export default {
       confirmPassword: 'Подтвердите пароль',
       signButton: 'Зарегистрироваться',
     },
-    errors: {
+    formikErrors: {
       required: 'Обязательное поле',
       countSymbols: 'От 3 до 20 символов',
       passCountSymbols: 'Не менее 6 символов',
@@ -47,6 +47,11 @@ export default {
       renameChannelTitle: 'Переименовать канал',
       removeChannelTitle: 'Удалить канал',
       confirmRemove: 'Уверены?',
+    },
+    toastify: {
+      addedChannel: 'Канал создан',
+      renamedChannel: 'Канал переименован',
+      removedChannel: 'Канал удален',
     },
   },
 };
