@@ -1,4 +1,4 @@
-import ModalWindow from '../modals/ModalWindow.jsx';
+import ModalWindow from '../modals/ModalComponent.jsx';
 import Header from '../components/Header.jsx';
 import Channels from '../components/Channels.jsx';
 import Messages from '../components/Messages.jsx';

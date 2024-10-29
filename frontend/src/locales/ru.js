@@ -1,0 +1,52 @@
+export default {
+  translation: {
+    header: {
+      namePage: 'Hexlet Chat',
+      exit: 'Выйти',
+    },
+    login: {
+      title: 'Войти',
+      username: 'Ваш ник',
+      password: 'Пароль',
+      footerPart1: 'Нет аккаунта? ',
+      footerPart2: 'Регистрация',
+    },
+    notFound: {
+      title: 'Страница не найдена',
+      footerPart1: 'Но вы можете перейти ',
+      footerPart2: 'на главную страницу',
+    },
+    signUp: {
+      title: 'Регистрация',
+      username: 'Имя пользователя',
+      password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
+      signButton: 'Зарегистрироваться',
+    },
+    errors: {
+      required: 'Обязательное поле',
+      countSymbols: 'От 3 до 20 символов',
+      passCountSymbols: 'Не менее 6 символов',
+      passwordConfirmNotOneOff: 'Пароли должны совпадать',
+      userAlreadyExists: 'Такой пользователь уже существует',
+      unicumName: 'Должно быть уникальным',
+    },
+    mainPage: {
+      renameChannel: 'Переименовать',
+      removeChannel: 'Удалить',
+      channels: 'Каналы',
+      newMessages: 'Введите сообщение...',
+      messagesCount_one: '{{count}} сообщение',
+      messagesCount_few: '{{count}} сообщения',
+      messagesCount_many: '{{count}} сообщений',
+      send: 'Отправить',
+      cancel: 'Отменить',
+      rename: 'Переименовать',
+      remove: 'Удалить',
+      addChannelTitle: 'Добавить канал',
+      renameChannelTitle: 'Переименовать канал',
+      removeChannelTitle: 'Удалить канал',
+      confirmRemove: 'Уверены?',
+    },
+  },
+};
