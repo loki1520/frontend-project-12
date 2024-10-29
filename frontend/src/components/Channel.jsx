@@ -1,9 +1,12 @@
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
 import { openModal } from '../slices/modalsSlice.js';
 
 const Channel = ({ name, id, removable }) => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
 
   const { currentChannelId } = useSelector((state) => state.channels);
@@ -35,8 +38,8 @@ const Channel = ({ name, id, removable }) => {
             id="dropdown-split-basic"
           />
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removing', id }))}>Удалить</Dropdown.Item>
-            <Dropdown.Item onClick={() => dispatch(openModal({ type: 'renaming', id }))}>Переименовать</Dropdown.Item>
+            <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removing', id }))}>{t('mainPage.removeChannel')}</Dropdown.Item>
+            <Dropdown.Item onClick={() => dispatch(openModal({ type: 'renaming', id }))}>{t('mainPage.renameChannel')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       )}

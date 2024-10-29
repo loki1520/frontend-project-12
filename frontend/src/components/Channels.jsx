@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { openModal } from '../slices/modalsSlice.js';
@@ -13,6 +14,8 @@ import { getChannels } from '../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 
 const Channels = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { user } = useAuth();
 
@@ -56,7 +59,9 @@ const Channels = () => {
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light d-flex flex-column h-100">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>
+          {t('mainPage.channels')}
+        </b>
         <button
           onClick={() => dispatch(openModal({ type: 'adding' }))}
           type="button"

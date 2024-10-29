@@ -10,11 +10,14 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
 import useAuth from '../hooks/useAuth.js';
 
 const RenameChannel = () => {
+  const { t } = useTranslation();
+
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
@@ -33,10 +36,10 @@ const RenameChannel = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .required('Обязательное поле')
-        .notOneOf(channelsNames, 'Должно быть уникальным'),
+        .min(3, t('errors.countSymbols'))
+        .max(20, t('errors.countSymbols'))
+        .required(t('errors.required'))
+        .notOneOf(channelsNames, t('errors.unicumName')),
     }),
     onSubmit: async (values) => {
       try {
@@ -48,7 +51,7 @@ const RenameChannel = () => {
         // => { id: '3', name: 'new channel', removable: true }
         dispatch(closeModal());
       } catch (error) {
-        console.error('Ошибка при добавлении канала', error);
+        console.error('Ошибка при переименовании канала', error);
       }
     },
   });
@@ -56,7 +59,7 @@ const RenameChannel = () => {
   return (
     <Modal show centered onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('mainPage.renameChannelTitle')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -85,10 +88,10 @@ const RenameChannel = () => {
               className="me-2 btn btn-secondary"
               onClick={() => dispatch(closeModal())}
             >
-              Отменить
+              {t('mainPage.cancel')}
             </button>
             <button type="submit" className="btn btn-primary">
-              Отправить
+              {t('mainPage.send')}
             </button>
           </div>
         </Form>

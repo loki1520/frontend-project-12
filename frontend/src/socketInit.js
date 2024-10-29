@@ -3,25 +3,25 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice
 import { addMessage } from './slices/messagesSlice.js';
 
 const initSocket = (dispatch) => {
-  function onNewMessage(payload) {
+  const onNewMessage = (payload) => {
     console.log('Socket: новое сообщение', payload);
     dispatch(addMessage(payload));
-  }
+  };
 
-  function onAddChannel(payload) {
+  const onAddChannel = (payload) => {
     console.log('Socket: создание канала', payload);
     dispatch(addChannel(payload));
-  }
+  };
 
-  function onRemoveChannel(payload) {
+  const onRemoveChannel = (payload) => {
     console.log('Socket: удаление канала', payload);
     dispatch(removeChannel(payload));
-  }
+  };
 
-  function onRenameChannel(payload) {
+  const onRenameChannel = (payload) => {
     console.log('Socket: переименованиe канала', payload);
     dispatch(renameChannel(payload));
-  }
+  };
 
   const handleError = (error) => {
     console.error('Socket error:', error);

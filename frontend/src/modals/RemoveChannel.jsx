@@ -1,11 +1,14 @@
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
 
 const RemoveChannel = () => {
+  const { t } = useTranslation();
+
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
@@ -28,25 +31,25 @@ const RemoveChannel = () => {
   return (
     <Modal show centered onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('mainPage.removeChannelTitle')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p className="lead">Уверены?</p>
+        <p className="lead">{t('mainPage.confirmRemove')}</p>
         <div className="d-flex justify-content-end">
           <button
             onClick={() => dispatch(closeModal())}
             type="button"
             className="me-2 btn btn-secondary"
           >
-            Отменить
+            {t('mainPage.cancel')}
           </button>
           <button
             onClick={handledRemoveChannel}
             type="button"
             className="btn btn-danger"
           >
-            Удалить
+            {t('mainPage.remove')}
           </button>
         </div>
       </Modal.Body>

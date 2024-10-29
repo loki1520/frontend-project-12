@@ -10,12 +10,15 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import routes from '../routes.js';
 import { closeModal } from '../slices/modalsSlice.js';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
 import useAuth from '../hooks/useAuth.js';
 
 const AddChannel = () => {
+  const { t } = useTranslation();
+
   const { user: { token } } = useAuth();
   const dispatch = useDispatch();
 
@@ -33,10 +36,10 @@ const AddChannel = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .required('Обязательное поле')
-        .notOneOf(channelsNames, 'Должно быть уникальным'),
+        .min(3, t('errors.countSymbols'))
+        .max(20, t('errors.countSymbols'))
+        .required(t('errors.required'))
+        .notOneOf(channelsNames, t('errors.unicumName')),
     }),
     onSubmit: async (values) => {
       try {
@@ -45,7 +48,6 @@ const AddChannel = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(' response.data.id 🍀===>>', response.data.id);
         dispatch(setCurrentChannel(response.data.id));
         dispatch(closeModal());
       } catch (error) {
@@ -57,7 +59,7 @@ const AddChannel = () => {
   return (
     <Modal show centered onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('mainPage.addChannelTitle')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -86,10 +88,10 @@ const AddChannel = () => {
               className="me-2 btn btn-secondary"
               onClick={() => dispatch(closeModal())}
             >
-              Отменить
+              {t('mainPage.cancel')}
             </button>
             <button type="submit" className="btn btn-primary">
-              Отправить
+              {t('mainPage.send')}
             </button>
           </div>
         </Form>

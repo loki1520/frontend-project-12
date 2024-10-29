@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { getMessages } from '../slices/messagesSlice.js';
 import ChatForm from './MessagesForm.jsx';
 
 const Messages = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { user } = useAuth();
 
@@ -53,7 +56,7 @@ const Messages = () => {
           </b>
         </p>
         <span className="text-muted">
-          {`${activeMessages.length} сообщений`}
+          {t('mainPage.messagesCount', { count: activeMessages.length })}
         </span>
       </div>
       <div
