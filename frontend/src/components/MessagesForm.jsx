@@ -64,7 +64,7 @@ const ChatForm = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.message}
-            aria-label="Новое сообщение"
+            aria-label={t('mainPage.ariaLabel')}
             placeholder={t('mainPage.newMessages')}
             className="border-0 p-0 ps-2"
           />
