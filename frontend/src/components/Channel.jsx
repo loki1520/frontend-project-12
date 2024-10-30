@@ -18,14 +18,12 @@ const Channel = ({ name, id, removable }) => {
     <button
       onClick={() => dispatch(setCurrentChannel(id))}
       type="button"
-      aria-label="Имя канала"
       className={`w-100 rounded-0 text-start text-truncate btn ${id === currentChannelId ? 'btn-secondary' : ''}`}
     >
       <span className="me-1">#</span>
       {filter.clean(name)}
     </button>
   );
-
   return (
     <li
       key={id}
