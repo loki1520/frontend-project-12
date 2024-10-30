@@ -25,6 +25,7 @@ const Channel = ({ name, id, removable }) => {
       {filter.clean(name)}
     </button>
   );
+
   return (
     <li
       key={id}
