@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth.js';
 import routes from '../routes.js';
 
@@ -25,7 +26,8 @@ const ChatForm = () => {
     },
     onSubmit: async (values, actions) => {
       if (!user) {
-        console.error('Вы не авторизованы');
+        toast.error(t('errors.notAuthorized'));
+        console.error(t('errors.notAuthorized'));
         return;
       }
       const { username, token } = user;
@@ -40,7 +42,8 @@ const ChatForm = () => {
         actions.resetForm();
         inputRef.current.focus();
       } catch (error) {
-        console.error('Ошибка отправки сообщения', error);
+        toast.error(t('errors.sendMessage'));
+        console.error(t('errors.sendMessage'), error);
       }
     },
   });

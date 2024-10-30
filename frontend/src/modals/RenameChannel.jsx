@@ -52,7 +52,8 @@ const RenameChannel = () => {
         toast.success(t('toastify.renamedChannel'));
         dispatch(closeModal());
       } catch (error) {
-        console.error('Ошибка при переименовании канала', error);
+        toast.error(t('errors.renamechannel'));
+        console.error(t('errors.renamechannel'), error);
       }
     },
   });

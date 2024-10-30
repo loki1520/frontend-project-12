@@ -53,7 +53,8 @@ const AddChannel = () => {
         dispatch(setCurrentChannel(response.data.id));
         dispatch(closeModal());
       } catch (error) {
-        console.error('Ошибка при добавлении канала', error);
+        toast.error(t('errors.addChannel'));
+        console.error(t('errors.addChannel'), error);
       }
     },
   });

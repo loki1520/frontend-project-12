@@ -31,7 +31,7 @@ const LoginPage = () => {
         navigate('/', { state: { from: location } });
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          actions.setErrors({ errorUnauthorized: 'Неверные имя пользователя или пароль' });
+          actions.setErrors({ errorUnauthorized: t('formikErrors.unatorized') });
         }
         throw error;
       }

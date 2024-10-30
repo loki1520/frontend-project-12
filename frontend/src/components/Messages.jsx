@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { getMessages } from '../slices/messagesSlice.js';
@@ -41,11 +42,12 @@ const Messages = () => {
         // => [{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
         dispatch(getMessages(responseMessages.data));
       } catch (error) {
-        console.error('Ошибка при получении сообщений:', error);
+        toast.error(t('errors.getChannels'));
+        console.error(t('errors.getChannels'), error);
       }
     };
     fetchMessages();
-  }, [user, dispatch]);
+  }, [user, dispatch, t]);
 
   return (
     <div className="col p-0 h-100 d-flex flex-column">

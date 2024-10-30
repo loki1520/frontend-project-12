@@ -24,6 +24,7 @@ export default {
       signButton: 'Зарегистрироваться',
     },
     formikErrors: {
+      unatorized: 'Неверные имя пользователя или пароль',
       required: 'Обязательное поле',
       countSymbols: 'От 3 до 20 символов',
       passCountSymbols: 'Не менее 6 символов',
@@ -52,6 +53,15 @@ export default {
       addedChannel: 'Канал создан',
       renamedChannel: 'Канал переименован',
       removedChannel: 'Канал удален',
+    },
+    errors: {
+      getChannels: 'Ошибка при получении каналов',
+      getMessages: 'Ошибка при получении сообщений',
+      notAuthorized: 'Вы не авторизованы',
+      sendMessage: 'Ошибка отправки сообщения',
+      addChannel: 'Ошибка при добавлении канала',
+      removeChannel: 'Ошибка при удалении канала',
+      renamechannel: 'Ошибка при переименовании канала',
     },
   },
 };

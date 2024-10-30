@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { openModal } from '../slices/modalsSlice.js';
@@ -35,13 +36,14 @@ const Channels = () => {
         });
         // => [{ id: '1', name: 'general', removable: false }, ...]
         dispatch(getChannels(responseChannels.data));
-        setIsLoaded(true); // для запуска useLayoutEffect скролла ПОСЛЕ загрузки
+        setIsLoaded(true); // для запуска useLayoutEffect ( для скролла ПОСЛЕ загрузки)
       } catch (error) {
-        console.error('Ошибка при получении каналов:', error);
+        toast.error(t('errors.getChannels'));
+        console.error(t('errors.getChannels'), error);
       }
     };
     fetchChannels();
-  }, [user, dispatch]);
+  }, [user, dispatch, t]);
 
   useLayoutEffect(() => {
     if (channelsRef.current && isLoaded) {

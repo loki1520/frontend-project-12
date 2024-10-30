@@ -25,7 +25,8 @@ const RemoveChannel = () => {
       toast.success(t('toastify.removedChannel'));
       dispatch(closeModal());
     } catch (error) {
-      console.error('Ошибка при удалении канала', error);
+      toast.error(t('errors.removeChannel'));
+      console.error(t('errors.removeChannel'), error);
     }
   };
 
