@@ -40,7 +40,7 @@ const Channel = ({ name, id, removable }) => {
             split
             id="dropdown-split-basic"
           >
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('mainPage.managementChannel')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removing', id }))}>{t('mainPage.removeChannel')}</Dropdown.Item>
