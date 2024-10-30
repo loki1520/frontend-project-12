@@ -39,7 +39,9 @@ const Channel = ({ name, id, removable }) => {
             className="flex-grow-0"
             split
             id="dropdown-split-basic"
-          />
+          >
+            <span className="visually-hidden">Управление каналом</span>
+          </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => dispatch(openModal({ type: 'removing', id }))}>{t('mainPage.removeChannel')}</Dropdown.Item>
             <Dropdown.Item onClick={() => dispatch(openModal({ type: 'renaming', id }))}>{t('mainPage.renameChannel')}</Dropdown.Item>
