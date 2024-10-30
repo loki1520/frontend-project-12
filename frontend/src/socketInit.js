@@ -3,49 +3,49 @@ import socket from './socket.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.js';
 import { addMessage } from './slices/messagesSlice.js';
 
-const initSocket = (dispatch) => {
+const initSocket = (dispatch, t) => {
   const handleConnect = () => {
-    console.log('WebSocket connected');
+    // console.log('WebSocket connected');
   };
 
   const onNewMessage = (payload) => {
-    console.log('Socket: новое сообщение', payload);
+    // console.log('Socket: новое сообщение', payload);
     dispatch(addMessage(payload));
   };
 
   const onAddChannel = (payload) => {
-    console.log('Socket: создание канала', payload);
+    // console.log('Socket: создание канала', payload);
     dispatch(addChannel(payload));
   };
 
   const onRemoveChannel = (payload) => {
-    console.log('Socket: удаление канала', payload);
+    // console.log('Socket: удаление канала', payload);
     dispatch(removeChannel(payload));
   };
 
   const onRenameChannel = (payload) => {
-    console.log('Socket: переименованиe канала', payload);
+    // console.log('Socket: переименованиe канала', payload);
     dispatch(renameChannel(payload));
   };
 
   const handleConnectError = () => {
-    toast.error('Ошибка подключения: не удается установить соединение с сервером.');
-    console.error('Ошибка подключения: не удается установить соединение с сервером.');
+    toast.error(t('errors.connect_error'));
+    console.error(t('errors.connect_error'));
   };
 
   const handleDisconnect = () => {
-    toast.error('Соединение было прервано.');
-    console.error('Соединение было прервано.');
+    toast.error(t('errors.disconnect'));
+    console.error(t('errors.disconnect'));
   };
 
   const handleOffline = () => {
-    toast.error('Интернет-соединение потеряно.');
-    console.error('Интернет-соединение потеряно.');
+    toast.error(t('errors.offline'));
+    console.error(t('errors.offline'));
   };
 
   const handleOnline = () => {
-    toast.success('Интернет-соединение восстановлено.');
-    console.log('Интернет-соединение восстановлено.');
+    toast.success(t('errors.online'));
+    console.log(t('errors.online'));
   };
 
   socket.on('connect', handleConnect);

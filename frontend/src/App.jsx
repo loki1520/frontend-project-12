@@ -6,6 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import initSocket from './socketInit.js';
 import LoginPage from './pages/LoginPage.jsx';
 import MainPage from './pages/MainPage.jsx';
@@ -24,12 +25,13 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const cleanSocket = initSocket(dispatch);
+    const cleanSocket = initSocket(dispatch, t);
     return () => cleanSocket();
-  }, [dispatch]);
+  }, [dispatch, t]);
 
   return (
     <BrowserRouter>
