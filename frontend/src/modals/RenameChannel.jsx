@@ -66,6 +66,7 @@ const RenameChannel = () => {
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
+            <Form.Label className="visually-hidden" htmlFor="username">Имя канала</Form.Label>
             <FormControl
               ref={inputRef}
               id="name"
