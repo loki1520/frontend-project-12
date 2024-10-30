@@ -1,10 +1,13 @@
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
 import { openModal } from '../slices/modalsSlice.js';
 
 const Channel = ({ name, id, removable }) => {
+  filter.add(filter.getDictionary('ru'));
+
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -18,7 +21,7 @@ const Channel = ({ name, id, removable }) => {
       className={`w-100 rounded-0 text-start text-truncate btn ${id === currentChannelId ? 'btn-secondary' : ''}`}
     >
       <span className="me-1">#</span>
-      {name}
+      {filter.clean(name)}
     </button>
   );
   return (

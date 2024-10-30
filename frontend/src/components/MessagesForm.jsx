@@ -31,7 +31,7 @@ const ChatForm = () => {
         return;
       }
       const { username, token } = user;
-      const newMessage = { body: values, channelId: currentChannelId, username };
+      const newMessage = { body: values.message, channelId: currentChannelId, username };
       try {
         await axios.post(routes.messagesPath(), newMessage, {
           headers: {

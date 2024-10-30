@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import routes from '../routes';
 import useAuth from '../hooks/useAuth.js';
 import { getMessages } from '../slices/messagesSlice.js';
 import ChatForm from './MessagesForm.jsx';
 
 const Messages = () => {
+  filter.add(filter.getDictionary('ru'));
+
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -67,13 +70,13 @@ const Messages = () => {
         className="chat-messages overflow-auto px-5"
         style={{ minHeight: '63vh', maxHeight: '63vh' }}
       >
-        {activeMessages.map(({ body: { message }, username, id }) => (
+        {activeMessages.map(({ body, username, id }) => (
           <div
             key={id}
             className="text-break mb-2"
           >
             <b>{username}</b>
-            {`: ${message}`}
+            {`: ${filter.clean(body)}`}
           </div>
         ))}
       </div>
