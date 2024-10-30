@@ -15,7 +15,7 @@ root.render(
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <App />
-        <ToastContainer autoClose={2000} pauseOnHover />
+        <ToastContainer autoClose={4000} pauseOnHover />
       </I18nextProvider>
     </Provider>
   </React.StrictMode>,

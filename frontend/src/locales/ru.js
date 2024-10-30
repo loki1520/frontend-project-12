@@ -53,7 +53,7 @@ export default {
     toastify: {
       addedChannel: 'Канал создан',
       renamedChannel: 'Канал переименован',
-      removedChannel: 'Канал удален',
+      removedChannel: 'Канал удалён',
     },
     errors: {
       getChannels: 'Ошибка при получении каналов',
