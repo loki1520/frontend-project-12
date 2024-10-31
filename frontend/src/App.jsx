@@ -29,6 +29,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // throw new Error('Тестовая ошибка в App для rollbar');
+    // rollbaa;
     const cleanSocket = initSocket(dispatch, t);
     return () => cleanSocket();
   }, [dispatch, t]);

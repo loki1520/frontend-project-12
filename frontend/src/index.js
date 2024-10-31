@@ -16,8 +16,8 @@ const rollbarConfig = {
 };
 
 // function TestError() {
-//   const a = null;
-//   return a.hello();
+//   const b = null;
+//   return b.hello();
 // }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
