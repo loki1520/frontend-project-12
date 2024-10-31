@@ -59,12 +59,6 @@ make install
 make start
 ```
 
-###### Deploy and run:
-
-```
-npm run build
-npm start
-```
 ---
 
 ### App features
