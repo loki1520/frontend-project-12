@@ -35,7 +35,7 @@ const Channels = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         // => [{ id: '1', name: 'general', removable: false }, ...]
-        dispatch(getChannels(responseChannels.data));
+        dispatch(getChannels(respo4nseChannels.data));
         setIsLoaded(true); // для запуска useLayoutEffect ( для скролла ПОСЛЕ загрузки)
       } catch (error) {
         toast.error(t('errors.getChannels'));
