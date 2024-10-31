@@ -11,7 +11,7 @@ import store from './slices/store.js';
 import App from './App';
 
 const rollbarConfig = {
-  accessToken: '23b5ddd6861f4041a48a21f3c5489c95',
+  accessToken: 'de79eaf366694891935086184c28e905',
   environment: 'testenv',
 };
 
