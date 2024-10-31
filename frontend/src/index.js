@@ -15,10 +15,10 @@ const rollbarConfig = {
   environment: 'testenv',
 };
 
-// function TestError() {
-//   const a = null;
-//   return a.hello();
-// }
+function TestError() {
+  const a = null;
+  return a.hello();
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,7 +29,7 @@ root.render(
           <I18nextProvider i18n={i18n}>
             <App />
             <ToastContainer autoClose={8000} pauseOnHover />
-            {/* <TestError /> */}
+            <TestError />
           </I18nextProvider>
         </Provider>
       </ErrorBoundary>
